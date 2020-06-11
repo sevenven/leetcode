@@ -1,3 +1,14 @@
+// for (var i = 0; i < arr.length - 1; i++) {
+// 	var minIndex = i;
+// 	for (var j = i + 1; j < arr.length; j++) {
+// 		if (arr[j] < arr[minIndex]) {
+// 			minIndex = j;
+// 		}
+// 	}
+// 	var tmp = arr[i];
+// 	arr[i] = arr[minIndex];
+// 	arr[minIndex] = tmp;
+// }
 // 常见排序算法实现
 // https://www.cnblogs.com/onepixel/p/7674659.html
 
@@ -17,14 +28,16 @@
 // 每次找最小值 然后放到待排序数组的起始位置
 // 原地排序 不稳定排序
 function selectionSort (arr) {
-	var len = arr.length;
-	for (var i = 0; i < len - 1; i++) {
+	for (var i = 0; i < arr.length - 1; i++) {
 		var minIndex = i;
-		for (var j = i + 1; j < len; j++) {
-			if (arr[j] < arr[minIndex]) 
+		for (var j = i + 1; j < arr.length; j++) {
+			if (arr[j] < arr[minIndex])  {
 				minIndex = j;
+			}
 		}
-		var tmp = arr[i]; arr[i] = arr[minIndex]; arr[minIndex] = tmp;
+		var tmp = arr[i];
+		arr[i] = arr[minIndex];
+		arr[minIndex] = tmp;
 	}
 }
 var arr = [3, 44, 38, 5, 15, 46, 50, 28, 26, 36, 19, 4, 2, 47, 27]
@@ -35,10 +48,9 @@ console.log(arr, '--selectionSort');
 // 对于未排序数据 在已排序序列中从后向前扫描 找到相应位置并插入
 // 原地排序 稳定排序
 function insertionSort (arr) {
-	var len = arr.length;
-	for (var i = 1; i < len; i++) {
+	for (var i = 1; i < arr.length; i++) {
 		var j = i - 1,
-				cur = arr[i];
+			cur = arr[i];
 		while (j >= 0 && cur < arr[j]) {
 			arr[j+1] = arr[j];
 			j--;
@@ -54,12 +66,13 @@ console.log(arr, '--insertionSort');
 // 每次查看相邻的元素 如果逆序 则交换
 // 原地排序 稳定排序
 function bubbleSort (arr) {
-	var len = arr.length - 1;
-	for (var i = 0; i < len; i++) {
+	for (var i = 0; i < arr.length - 1; i++) {
 		var flag = false;
-		for (var j = 0; j < len - i; j++) {
+		for (var j = 0; j < arr.length - 1 - i; j++) {
 			if (arr[j] > arr[j+1]) {
-				var tmp = arr[j]; arr[j] = arr[j+1]; arr[j+1] = tmp;
+				var tmp = arr[j];
+				arr[j] = arr[j+1];
+				arr[j+1] = tmp;
 				flag = true;
 			}
 		}
@@ -77,11 +90,10 @@ console.log(arr, '--bubbleSort');
 // 第一个突破O(n^2)的排序算法，是简单插入排序的改进版
 // 原地排序 稳定排序
 function shellSort (arr) {
-	var len = arr.length;
-	for (var gap = len >> 1; gap > 0; gap >>= 1) {
-		for (var i = gap; i < len; i++) {
+	for (var gap = arr.length >> 1; gap > 0; gap >>= 1) {
+		for (var i = gap; i < arr.length; i++) {
 			var j = i,
-					cur = arr[i];
+				cur = arr[i];
 			while (j - gap >= 0 && cur < arr[j-gap]) {
 				arr[j] = arr[j-gap];
 				j = j - gap;
@@ -93,6 +105,7 @@ function shellSort (arr) {
 var arr = [3, 44, 38, 5, 15, 46, 50, 28, 26, 36, 19, 4, 2, 47, 27]
 shellSort(arr);
 console.log(arr, '--shellSort');
+return;
 
 // -------------------------------------------------------------------------------
 // 平均时间复杂度O(nlogn)的排序

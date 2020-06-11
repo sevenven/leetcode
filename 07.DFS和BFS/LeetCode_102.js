@@ -7,20 +7,22 @@
 // BFS解法
 // 时间复杂度O(N) 空间复杂度O(n)
 var levelOrder = function (root) {
-	if (root === null) return;
+	if (!root) return [];
 	var queue = [root],
-			level = 0,
-			result = [];
-	while (queue.length > 0) {
-		result[level] = [];
+		level = 0,
+		result = [];
+	while (queue.length) {
 		var len = queue.length;
+		result[level] = [];
 		for (var i = 0; i < len; i++) {
 			var cur = queue.shift();
 			result[level].push(cur.val);
-			if (cur.left) 
+			if (cur.left) {
 				queue.push(cur.left);
-			if (cur.right) 
+			}
+			if (cur.right) {
 				queue.push(cur.right);
+			}
 		}
 		level++;
 	}
@@ -35,39 +37,40 @@ var levelOrder = function (root) {
 // 时间复杂度O(n) 空间复杂度O(n)
 var levelOrder = function (root) {
 	var result = [];
-	order(0, root);
+	order(root, 0);
 	return result;
-	function order (level, root) {
-		if (root === null) return;
-		if (!result[level]) 
+	function order (root, level) {
+		if (!root) return;
+		if (!result[level]) {
 			result[level] = [];
+		}
 		result[level].push(root.val);
-		order(level + 1, root.left);
-		order(level + 1, root.right);
+		order(root.left, level + 1);
+		order(root.right, level + 1);
 	}
 };
 
 // 节点
-function TreeNode (val) {
+function TreeNode(val) {
 	this.val = val;
 	this.left = null;
 	this.right = null;
 }
 
 // 二叉搜索树
-function BinarySearchTree () {
+function BinarySearchTree() {
 	this.root = null;
 }
 // 添加节点
 BinarySearchTree.prototype.insert = function (val) {
-	if(val === null || val === undefined) return;
+	if (val === null || val === undefined) return;
 	var node = new TreeNode(val);
 	if (!this.root) {
 		this.root = node;
 		return;
 	}
 	var cur = this._getTreeNode(val);
-	if (val < cur.val) 
+	if (val < cur.val)
 		cur.left = node;
 	else
 		cur.right = node;
@@ -97,4 +100,4 @@ bst.insert(20);
 bst.insert(15);
 bst.insert(22);
 
-console.log(levelOrder(bst.root)) // [ [ 9 ], [ 3, 20 ], [ 2, 7, 15, 22 ] ]
+console.log(levelOrder(bst.root)) // [[9], [3, 20], [2, 7, 15, 22]]

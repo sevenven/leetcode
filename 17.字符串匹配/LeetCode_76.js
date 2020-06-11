@@ -1,4 +1,5 @@
 // https://leetcode-cn.com/problems/minimum-window-substring/
+// 第一遍完成
 
 /**
  * @param {string} s
@@ -7,12 +8,12 @@
  */
 var minWindow = function(s, t) {
   var left = 0,
-    right = 0,
-    needs = {},
-    window = {},
-    match = 0,
-    start = 0,
-    minLen = Infinity;
+      right = 0,
+      needs = {},
+      window = {},
+      match = 0,
+      start = 0,
+      minLen = Infinity;
   for (c of t) 
     needs[c] = needs[c] ? ++needs[c] : 1;
   while (right < s.length) {

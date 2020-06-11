@@ -13,8 +13,9 @@ var myPow = function(x, n) {
 		x = 1 / x;
 		n = -n;
 	}
-	for (var i = 0; i < n; i++) 
+	for (var i = 0; i < n; i++) {
 		ans *= x;
+	}
 	return ans;
 };
 
@@ -54,12 +55,13 @@ var myPow = function (x, n) {
 		n = -n;
 	}
 	for (var i = n; i > 0; i = i >>> 1) {
-		if (i % 2 === 1) 
+		if (i % 2 === 1) {
 			ans *= x;
+		}
 		x *= x;
 	}
 	return ans;
-};
+}; 
 
 console.log(myPow(2.00000, 10)); // 1024
 console.log(myPow(2.10000, 3)); // 9.26

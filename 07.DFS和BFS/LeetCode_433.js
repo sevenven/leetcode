@@ -10,24 +10,26 @@
 // 时间复杂度O(mnk) 空间复杂度(1)
 var minMutation = function (start, end, bank) {
 	var queue = [start],
+		level = 0,
 		genes = ['A', 'C', 'G', 'T'],
-		basnSet = {},
-		level = 0;
-	while (bank.length) 
-		basnSet[bank.shift()] = true;
-	while (queue.length > 0) {
+		bankSet = {};
+	while (bank.length) {
+		bankSet[bank.shift()] = true;
+	}
+	while (queue.length) {
 		var len = queue.length;
 		for (var i = 0; i < len; i++) {
 			var cur = queue.shift();
 			if (cur === end) return level;
 			for (var j = 0; j < cur.length; j++) {
 				for (var k = 0; k < genes.length; k++) {
-					if (cur[j] === genes[k]) continue;
-					var curChange = cur.slice(0, j) + genes[k] + cur.slice(j + 1);
-					if (basnSet[curChange]) {
-						queue.push(curChange);
-						delete basnSet[curChange];
-					}  
+					if (cur[j] !== genes[k]) {
+						var curChange = cur.slice(0, j) + genes[k] + cur.slice(j + 1);
+						if (bankSet[curChange]) {
+							queue.push(curChange);
+							delete bankSet[curChange];
+						}
+					}
 				}
 			}
 		}
@@ -45,5 +47,5 @@ var minMutation = function (start, end, bank) {
 // var minMutation = function (start, end, bank) {
 // };
 
-console.log(minMutation("AACCGGTT", "AACCGGTA", ["AACCGGTA"]))
-console.log(minMutation("AACCGGTT", "AAACGGTA", ["AACCGGTA", "AACCGCTA", "AAACGGTA"]))
+console.log(minMutation("AACCGGTT", "AACCGGTA", ["AACCGGTA"])) // 1
+console.log(minMutation("AACCGGTT", "AAACGGTA", ["AACCGGTA", "AACCGCTA", "AAACGGTA"])) // 2

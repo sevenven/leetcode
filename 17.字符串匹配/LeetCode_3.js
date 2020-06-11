@@ -1,4 +1,5 @@
 // https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
+// 第一遍完成
 
 /**
  * @param {string} s
@@ -6,9 +7,9 @@
  */
 var lengthOfLongestSubstring = function(s) {
   var left = 0,
-    right = 0,
-    window = {},
-    res = 0;
+      right = 0,
+      window = {},
+      res = 0;
   while (right < s.length) {
     var c1 = s[right];
     window[c1] = window[c1] ? ++window[c1] : 1;

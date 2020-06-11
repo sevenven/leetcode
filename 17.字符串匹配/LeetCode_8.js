@@ -15,14 +15,16 @@ var myAtoi = function(str) {
  */
 // 方法二
 var myAtoi = function(str) {
-  var i = 0,
-    sign = 1,
-    num = 0;
+  var sign = 1,
+    num = 0,
+    i = 0;
   str = str.trimStart();
-  if (str[i] === '-' || str[i] === '+') 
+  if (str[i] === '-' || str[i] === '+') {
     sign = str[i++] === '-' ? -1 : 1;
-  while (str[i] && str[i].charCodeAt() >= 48 && str[i].charCodeAt() <= 57) 
+  }
+  while (str[i] && str[i].charCodeAt() >= 48 && str[i].charCodeAt() <= 57) {
     num = num * 10 + str[i++].charCodeAt() - 48;
+  }
   num *= sign;
   return Math.max(Math.min(num, 2147483647), -2147483648);
 };

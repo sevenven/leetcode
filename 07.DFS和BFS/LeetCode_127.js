@@ -24,11 +24,12 @@ var ladderLength = function(beginWord, endWord, wordList) {
 			if (cur === endWord) return level;
 			for (var j = 0; j < cur.length; j++) {
 				for (var k = 0; k < words.length; k++) {
-					if (cur[j] === words[k]) continue;
-					var curChange = cur.slice(0, j) + words[k] + cur.slice(j + 1);
-					if (wordSet[curChange]) {
-						queue.push(curChange);
-						delete wordSet[curChange];
+					if (cur[j] !== words[k]) {
+						var curChange = cur.slice(0, j) + words[k] + cur.slice(j + 1);
+						if (wordSet[curChange]) {
+							queue.push(curChange);
+							delete wordSet[curChange];
+						}
 					}
 				}
 			}

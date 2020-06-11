@@ -15,12 +15,13 @@ var combine = function (n, k) {
 			result.push(arr);
 			return;
 		}
-		for (var i = begin; i <= n - k + 1 + arr.length; i++) 
+		for (var i = begin; i <= n - k + 1 + arr.length; i++) {
 			recombine(i + 1, arr.concat([i]), n, k);
+		}
 	}
 };
 
-console.log(combine(4, 1));
-console.log(combine(4, 2));
-console.log(combine(4, 3));
-console.log(combine(4, 4));
+console.log(combine(4, 1)); // [[1], [2], [3], [4]]
+console.log(combine(4, 2)); // [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]
+console.log(combine(4, 3)); // [[1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4]]
+console.log(combine(4, 4)); // [[1, 2, 3, 4]]

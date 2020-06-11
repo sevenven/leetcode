@@ -9,31 +9,29 @@
 var solveNQueens = function (n) {
 	var result = [];
 	placeQueens({}, {}, {}, 0, [], n);
-	return genetate(result, n);
-	function placeQueens (cols, pie, na, curRow, curState, n) {
-		if (curRow === n) {
-			result.push(Array.from(curState));
-			return;
+	return result;
+	function placeQueens (col, pie, na, row, state, n) {
+		if (row === n) {
+			result.push(generate(state, n));
 		}
-		for (var col = 0; col < n; col++) {
-			if (cols[col] || pie[curRow + col] || na[curRow - col]) continue;
-			cols[col] = true;
-			pie[curRow + col] = true;
-			na[curRow - col] = true;
-			curState.push(col);
-			placeQueens(cols, pie, na, curRow + 1, curState, n);
-			delete cols[col];
-			delete pie[curRow + col];
-			delete na[curRow - col];
-			curState.pop();
+		for (var i = 0; i < n; i++) {
+			if (!col[i] && !pie[row+i] && !na[row-i]) {
+				col[i] = true;
+				pie[row+i] = true;
+				na[row-i] = true;
+				state.push(i);
+				placeQueens(col, pie, na, row + 1, state, n);
+				delete col[i];
+				delete pie[row+i];
+				delete na[row-i];
+				state.pop();
+			}
 		}
 	}
-	function genetate (result, n) {
+	function generate (state, n) {
 		var board = [];
-		for (var i = 0; i < result.length; i++) {
-			board[i] = [];
-			for (col of result[i]) 
-				board[i].push(".".repeat(col) + 'Q' + ".".repeat(n-col-1));
+		for (i of state) {
+			board.push('.'.repeat(i) + 'Q' + '.'.repeat(n - i - 1));
 		}
 		return board;
 	}
@@ -45,23 +43,22 @@ var solveNQueens = function (n) {
  */
 // 写法二
 var solveNQueens = function (n) {
-    var result = [];
-    placeQueens(result, n);
-    return result;
+	var result = [];
+	placeQueens([], 0, n);
+	return result;
+	function placeQueens (state, row, n) {
+		if (row === n) {
+			result.push(state.map(col => '.'.repeat(col) + 'Q' + '.'.repeat(n - col - 1)));
+		}
+		for (var i = 0; i < n; i++) {
+			if (!state.some((col, s_row) => i === col || (row + i) === (s_row + col) || (row - i) === (s_row - col))) {
+				state.push(i);
+				placeQueens(state, row + 1, n);
+				state.pop();
+			}
+		}
+	}
 };
 
-function placeQueens (result, col, board = [], row = 0) {
-    if (row === col) {
-        result.push(board.map(b_col => '.'.repeat(b_col) + 'Q' + '.'.repeat(col - b_col - 1)))
-    }
-    for (var i = 0; i < col; i++) {
-        if (!board.some((b_col, b_row) => i === b_col || (i - b_col) === (row - b_row) || (b_col + b_row) === (i + row))) {
-            board.push(i);
-            placeQueens(result, col, board, row + 1);
-            board.pop();
-        }
-    }
-}
-
-console.log(solveNQueens(4));
+console.log(solveNQueens(4)); // [['.Q..', '...Q', 'Q...', '..Q.'], ['..Q.', 'Q...', '...Q', '.Q..']]
 // console.log(solveNQueens(5));

@@ -7,17 +7,21 @@
 // BFS解法
 // 时间复杂度O(n) 空间复杂度O(logn)
 var largestValues = function (root) {
-	if (root === null) return [];
+	if (!root) return [];
 	var queue = [root],
-		maxArr = [],
-		level = 0;
-	while (queue.length > 0) {
+		level = 0,
+		maxArr = [];
+	while (queue.length) {
 		var len = queue.length;
 		for (var i = 0; i < len; i++) {
 			var cur = queue.shift();
 			maxArr[level] = maxArr[level] === undefined ? cur.val : Math.max(maxArr[level], cur.val);
-			if (cur.left) queue.push(cur.left);
-			if (cur.right) queue.push(cur.right);
+			if (cur.left) {
+				queue.push(cur.left);
+			}
+			if (cur.right) {
+				queue.push(cur.right);
+			}
 		}
 		level++;
 	}
@@ -36,10 +40,10 @@ var largestValues = function (root) {
 	largest(root, 0);
 	return maxArr;
 	function largest (root, level) {
-		if (root === null) return;
-		maxArr[level] = maxArr[level] === undefined ? root.val : Math.max(maxArr[level], root.val);
-		if (root.left) largest(root.left, level + 1);
-		if (root.right) largest(root.right, level + 1);
+		if (!root) return;
+		maxArr[level]  = maxArr[level] === undefined ? root.val : Math.max(maxArr[level], root.val);
+		largest(root.left, level + 1);
+		largest(root.right, level + 1);
 	}
 };
 
@@ -93,4 +97,4 @@ bst.insert(20);
 bst.insert(15);
 bst.insert(22);
 
-console.log(largestValues(bst.root));
+console.log(largestValues(bst.root)); // [9, 20, 22]

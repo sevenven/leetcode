@@ -9,10 +9,11 @@
 // 时间复杂度O(n*m) 空间复杂度O(1)
 var numJewelsInStones = function(J, S) {
   var count = 0;
-  for (s of S) {
+  for (var s of S) {
     for (j of J) {
-      if (s === j)
-       count++;
+      if (s === j) {
+        count++;
+      }
     }
   }
   return count;
@@ -26,13 +27,15 @@ var numJewelsInStones = function(J, S) {
 // 方法二
 // 时间复杂度O(n+m) 空间复杂度O(m)
 var numJewelsInStones = function(J, S) {
-  var map = {},
-      count = 0;
-  for (j of J) 
+  var count = 0;
+    map = {};
+  for (j of J) {
     map[j] = true;
+  }
   for (s of S) {
-    if (map[s]) 
+    if (map[s]) {
       count++;
+    }
   }
   return count;
 };

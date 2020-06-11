@@ -6,7 +6,7 @@
  */
 // 方法一
 var lengthOfLastWord = function(s) {
-  var arr = s.split(' ');
+  var arr = s.split(" ");
   return arr.length ? arr[arr.length-1].length : 0;
 };
 
@@ -16,12 +16,12 @@ var lengthOfLastWord = function(s) {
  */
 // 方法二
 var lengthOfLastWord = function(s) {
-  var len = s.length,
-    count = 0;
-  for (var i = len - 1; i >= 0; i--) {
-    if (s[i] === ' ') {
-      if (count === 0) 
+  var count = 0;
+  for (var i = s.length - 1; i >= 0; i--) {
+    if (s[i] === " ") {
+      if (count === 0) {
         continue;
+      }
       break;
     }
     count++;
