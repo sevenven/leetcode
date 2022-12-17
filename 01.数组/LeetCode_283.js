@@ -1,4 +1,6 @@
 // https://leetcode-cn.com/problems/move-zeroes
+// 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
+// 请注意 ，必须在不复制数组的情况下原地对数组进行操作。
 
 /**
  * @param {number[]} nums
@@ -8,12 +10,12 @@
 // 时间复杂度O(n^2) 空间复杂度O(1)
 var moveZeroes = function (nums) {
 	var len = nums.length;
-	for (var i = 0; i < len; i++) {
+	for (var i = 0; i < len - 1; i++) {
 		if (nums[i] === 0) {
 			for (var j = i + 1; j < len; j++) {
-				nums[j-1] = nums[j];
+				nums[j - 1] = nums[j];
 			}
-			nums[len-1] = 0;
+			nums[len - 1] = 0;
 			i--;
 			len--;
 		}

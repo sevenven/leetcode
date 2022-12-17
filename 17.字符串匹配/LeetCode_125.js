@@ -31,7 +31,7 @@ function isLetterOrNumber (code) {
  * @param {string} s
  * @return {boolean}
  */
-// 方法一
+// 方法二
 // 时间复杂度O(n) 空间复杂度O(n)
 var isPalindrome = function (s) {
   var str = s.replace(/\W/g, '').toLowerCase(),

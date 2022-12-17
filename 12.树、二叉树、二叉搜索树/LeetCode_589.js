@@ -1,4 +1,5 @@
 // https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/
+// 给定一个 n 叉树的根节点  root ，返回 其节点值的 前序遍历 。
 
 /**
  * @param {Node} root
@@ -11,7 +12,7 @@ var preorder = function(root) {
 	order(root);
 	return result;
 	function order(root) {
-		if (root === null) return;
+		if (!root) return;
 		result.push(root.val);
 		for (child of root.children) 
 			order(child);
@@ -25,10 +26,10 @@ var preorder = function(root) {
 // 使用栈
 // 时间复杂度O(n) 空间复杂度O(n)
 var preorder = function(root) {
-	if (root === null) return [];
+	if (!root) return [];
 	var stack = [root],
 			result = [];
-	while (stack.length > 0) {
+	while (stack.length) {
 		var cur = stack.pop();
 		result.push(cur.val);
 		for (var i = cur.children.length - 1; i >= 0; i--) 

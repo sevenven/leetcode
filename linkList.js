@@ -2,13 +2,13 @@
 // 比较简易的实现 默认不往链表中添加值重复的元素 默认非环形链表
 
 // 节点
-function ListNode (val) {
+function ListNode(val) {
 	this.val = val;
 	this.next = null;
 }
 
 // 链表
-function LinkList () {
+function LinkList() {
 	this.head = null;
 }
 
@@ -20,7 +20,7 @@ LinkList.prototype.append = function (val) {
 		return;
 	}
 	var cur = this.head;
-	while (cur.next) 
+	while (cur.next)
 		cur = cur.next;
 	cur.next = node;
 }
@@ -28,7 +28,7 @@ LinkList.prototype.append = function (val) {
 // 在指定元素后插入一个元素
 LinkList.prototype.insert = function (val, newVal) {
 	var node = new ListNode(newVal),
-			cur = this.findByValue(val);
+		cur = this.findByValue(val);
 	if (cur === null) {
 		console.log('未找到指定插入位置');
 		return;
@@ -41,7 +41,7 @@ LinkList.prototype.insert = function (val, newVal) {
 // 根据value查找节点
 LinkList.prototype.findByValue = function (val) {
 	var cur = this.head;
-	while (cur && cur.val != val) 
+	while (cur && cur.val != val)
 		cur = cur.next;
 	return cur;
 }
@@ -49,11 +49,11 @@ LinkList.prototype.findByValue = function (val) {
 // 根据index查找节点 下标从0开始
 LinkList.prototype.findByIndex = function (index) {
 	var cur = this.head,
-			count = -1;
+		count = 0;
 	while (cur) {
-		count++;
 		if (count === index) return cur;
 		cur = cur.next;
+		count++;
 	}
 	return null;
 }
@@ -61,16 +61,16 @@ LinkList.prototype.findByIndex = function (index) {
 // 查找前一个
 LinkList.prototype.findPrev = function (val) {
 	var cur = this.head;
-	while (cur.next && cur.next.val != val) 
+	while (cur.next && cur.next.val != val)
 		cur = cur.next;
-	return cur.next === null ? null : cur;
+	return cur.next ? cur : null;
 }
 
 // 查找中间节点
 LinkList.prototype.findMiddle = function () {
 	var slow = this.head,
-			fast = this.head;
-	while(fast && fast.next) {
+		fast = this.head;
+	while (fast && fast.next) {
 		slow = slow.next;
 		fast = fast.next.next;
 	}
@@ -80,18 +80,14 @@ LinkList.prototype.findMiddle = function () {
 // 查找倒数第n个节点
 LinkList.prototype.findIndexFromEnd = function (n) {
 	var fast = this.head,
-			slow = this.head;
-	while (n > 0 && fast) {
+		slow = this.head;
+	while (fast && --n > 0) {
 		fast = fast.next;
-		n--;
 	}
-	if (n != 0) {
-		return null;
-	} else {
-		while (fast) {
-			fast = fast.next;
-			slow = slow.next;
-		}
+	if (n > 0) return null;
+	while (fast) {
+		fast = fast.next;
+		slow = slow.next;
 	}
 	return slow;
 }
@@ -102,38 +98,40 @@ LinkList.prototype.remove = function (val) {
 	if (cur.val === val) {
 		this.head = this.head.next;
 		return;
-}
-	while (cur.next && cur.next.val !== val) 
+	}
+	while (cur.next && cur.next.val !== val)
 		cur = cur.next;
-	if (cur.next) cur.next = cur.next.next;
+	if (cur.next)
+		cur.next = cur.next.next;
 }
 
 // 删除指定index的节点
 LinkList.prototype.removeIndex = function (index) {
 	var cur = this.head,
-			count = 1;
+		count = 1;
 	if (index === 0) {
 		this.head = this.head.next;
 		return;
 	}
-	while (cur.next && index !== count) 
+	while (cur.next && count++ === index)
 		cur = cur.next;
-	if (cur.next) cur.next = cur.next.next;
+	if (cur.next)
+		cur.next = cur.next.next;
 }
 
 // 删除倒数第n个节点
 LinkList.prototype.removeIndexFromEnd = function (n) {
-	if (n <= 0) return;
 	var node = this.findIndexFromEnd(n);
 	if (!node) {
 		console.log('链表长度不足');
 		return;
 	}
-	var prev = this.findPrev(node.val);
-	if (prev === null) 
+	var prev = this.findPrev(node);
+	if (!prev) {
 		this.head = this.head.next;
-	else 
+	} else {
 		prev.next = prev.next.next;
+	}
 }
 
 // 打印整个链表
@@ -148,7 +146,7 @@ LinkList.prototype.print = function () {
 // 反转链表
 LinkList.prototype.reverseList = function () {
 	var prev = null,
-			cur = this.head;
+		cur = this.head;
 	while (cur) {
 		var next = cur.next;
 		cur.next = prev;
@@ -161,7 +159,7 @@ LinkList.prototype.reverseList = function () {
 // 检测链表是否是环形链表
 LinkList.prototype.checkCircle = function (head) {
 	var fast = head,
-			slow = head;
+		slow = head;
 	while (fast && fast.next) {
 		fast = fast.next.next;
 		slow = slow.next;

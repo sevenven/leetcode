@@ -1,4 +1,6 @@
 // https://leetcode-cn.com/problems/linked-list-cycle/
+// 给你一个链表的头节点 head ，判断链表中是否有环。
+
 // LeetCode速度：1.哈希表 2.快慢指针法
 
 /**

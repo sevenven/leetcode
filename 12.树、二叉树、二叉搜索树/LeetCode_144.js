@@ -1,4 +1,5 @@
 // https://leetcode-cn.com/problems/binary-tree-preorder-traversal/
+// 给你二叉树的根节点 root ，返回它节点值的 前序 遍历。
 
 /**
  * @param {TreeNode} root
@@ -10,37 +11,12 @@ var preorderTraversal = function (root) {
 	var result = [];
 	traversal(root);
 	return result;
-	function traversal (root) {
+	function traversal(root) {
 		if (!root) return;
 		result.push(root.val);
 		traversal(root.left);
 		traversal(root.right);
 	}
-};
-
-/**
- * @param {TreeNode} root
- * @return {number[]}
- */
-// 莫里斯遍历
-// 时间复杂度O(n) 空间复杂度O(1)
-var preorderTraversal = function (root) {
-	var cur = root,
-		result = [];
-	while (cur) {
-		result.push(cur.val);
-		if (cur.left) {
-			var pre = cur.left;
-			while (pre.right) {
-				pre = pre.right;
-			}
-			pre.right = cur.right;
-			cur = cur.left;
-		} else {
-			cur = cur.right;
-		}
-	}
-	return result;
 };
 
 /**
@@ -62,28 +38,59 @@ var preorderTraversal = function (root) {
 	return result;
 };
 
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+// 莫里斯遍历
+// 时间复杂度O(n) 空间复杂度O(1)
+var preorderTraversal = function (root) {
+	var cur = root,
+		predecessor = null,
+		result = [];
+	while (cur) {
+		if (cur.left) {
+			predecessor = cur.left;
+			while (predecessor.right && predecessor.right !== cur)
+				predecessor = predecessor.right;
+			if (!predecessor.right) {
+				result.push(cur.val);
+				predecessor.right = cur;
+				cur = cur.left;
+			} else {
+				predecessor.right = null;
+				cur = cur.right;
+			}
+		} else {
+			result.push(cur.val);
+			cur = cur.right;
+		}
+	}
+	return result;
+};
+
 // 节点
-function TreeNode (val) {
+function TreeNode(val) {
 	this.val = val;
 	this.left = null;
 	this.right = null;
 }
 
 // 二叉搜索树
-function SearchTree () {
+function SearchTree() {
 	this.root = null;
 }
 
 // 添加节点
 SearchTree.prototype.insert = function (val) {
-	if(val === null || val === undefined) return;
+	if (val === null || val === undefined) return;
 	var node = new TreeNode(val);
 	if (!this.root) {
 		this.root = node;
 		return;
 	}
 	var curNode = this._getTreeNode(val);
-	if (val < curNode.val) 
+	if (val < curNode.val)
 		curNode.left = node;
 	else
 		curNode.right = node;

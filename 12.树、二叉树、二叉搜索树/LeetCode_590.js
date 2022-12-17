@@ -1,4 +1,5 @@
 // https://leetcode-cn.com/problems/n-ary-tree-postorder-traversal/
+// 给定一个 n 叉树的根节点 root ，返回 其节点值的 后序遍历 。
 
 /**
  * @param {Node} root
@@ -10,7 +11,7 @@ var postorder = function (root) {
 	var result = [];
 	order(root);
 	return result;
-	function order (root) {
+	function order(root) {
 		if (!root) return;
 		for (child of root.children) {
 			order(child);
@@ -21,10 +22,10 @@ var postorder = function (root) {
 
 // 使用栈
 var postorder = function (root) {
-	if (root === null) return [];
+	if (!root) return [];
 	var stack = [root],
 		result = [];
-	while (stack.length > 0) {
+	while (stack.length) {
 		var cur = stack.pop();
 		result.unshift(cur.val);
 		for (child of cur.children) {

@@ -1,4 +1,6 @@
 // https://leetcode-cn.com/problems/reverse-linked-list/
+// 给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
+
 // LeetCode速度：1.指向前一个节点 2.递归 3.头插法
 
 /**

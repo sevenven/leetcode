@@ -1,75 +1,68 @@
 // https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/
-// 超出时间限制了
+// 序列化是将一个数据结构或者对象转换为连续的比特位的操作，进而可以将转换后的数据存储在一个文件或者内存中，同时也可以通过网络传输到另一个计算机环境，采取相反方式重构得到原数据。
+// 请设计一个算法来实现二叉树的序列化与反序列化。这里不限定你的序列 / 反序列化算法执行逻辑，你只需要保证一个二叉树可以被序列化为一个字符串并且将这个字符串反序列化为原始的树结构。
+// 提示: 输入输出格式与 LeetCode 目前使用的方式一致，详情请参阅 LeetCode 序列化二叉树的格式。你并非必须采取这种方式，你也可以采用其他的方法解决这个问题。
 
+// DFS
+// 时间复杂度为 O(n) 空间复杂度为 O(n)
+/**
+ * Encodes a tree to a single string.
+ *
+ * @param {TreeNode} root
+ * @return {string}
+ */
 var serialize = function (root) {
-	if (root === null) return 'null,'
-	return root.val + ',' + serialize(root.left) + serialize(root.right);
+	return rserialize(root, '');
 };
 
+const rserialize = (root, str) => {
+	if (root === null) return str += "None,";
+	str += root.val + ",";
+	str = rserialize(root.left, str);
+	str = rserialize(root.right, str);
+	return str;
+}
+
+/**
+ * Decodes your encoded data to tree.
+ *
+ * @param {string} data
+ * @return {TreeNode}
+ */
 var deserialize = function (data) {
-	var arr = data.split(',');
-	arr.pop();
-	return redeserialize(arr)
-	function redeserialize(arr) {
-		if (arr.length === 0) return null;
-		var root = new TreeNode(arr[0]);
-		root.left = redeserialize(arr.slice(1));
-		root.right = redeserialize(arr.slice(2));
-		return root;
-	}
+	const dataList = data.split(",");
+	return rdeserialize(dataList);
 };
 
-// 节点
-function TreeNode (val) {
-	this.val = val;
-	this.left = null;
-	this.right = null;
-}
-
-// 二叉搜索树
-function SearchTree () {
-	this.root = null;
-}
-
-// 添加节点
-SearchTree.prototype.insert = function (val) {
-	if(val === null || val === undefined) return;
-	var node = new TreeNode(val);
-	if (!this.root) {
-		this.root = node;
-		return;
+const rdeserialize = (dataList) => {
+	if (dataList[0] === "None") {
+		dataList.shift();
+		return null;
 	}
-	var cur = this._getTreeNode(val);
-	if (val < cur.val) 
-		cur.left = node;
-	else
-		cur.right = node;
+	const root = new TreeNode(dataList[0] * 1);
+	dataList.shift();
+	root.left = rdeserialize(dataList);
+	root.right = rdeserialize(dataList);
+	return root;
 }
 
-// 在树中遍历查找可以添加val的节点
-SearchTree.prototype._getTreeNode = function (val) {
-	var cur = this.root;
-	while (true) {
-		if (val < cur.val) {
-			if (!cur.left) break;
-			cur = cur.left;
-		}
-		if (val >= cur.val) {
-			if (!cur.right) break;
-			cur = cur.right;
-		}
-	}
-	return cur;
-}
+// BFS
+// 时间复杂度为 O(n) 空间复杂度为 O(n)
 
-// [1,3,null,null,4]
-var searchTree = new SearchTree();
-searchTree.insert(40);
-searchTree.insert(25);
-searchTree.insert(55);
-searchTree.insert(45);
-searchTree.insert(60);
+/**
+ * Encodes a tree to a single string.
+ *
+ * @param {TreeNode} root
+ * @return {string}
+ */
+var serialize = function (root) {
+};
 
-console.log(searchTree.root);
-// console.log(serialize(searchTree.root));
-console.log(deserialize(serialize(searchTree.root)))
+/**
+ * Decodes your encoded data to tree.
+ *
+ * @param {string} data
+ * @return {TreeNode}
+ */
+var deserialize = function (data) {
+};

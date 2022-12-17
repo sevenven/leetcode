@@ -1,6 +1,7 @@
 // https://leetcode-cn.com/problems/merge-two-sorted-lists/
-// LeetCode速度：1.递归写法 2.非递归写法
+// 将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 
 
+// LeetCode速度：1.递归写法 2.非递归写法
 /**
  * @param {ListNode} l1
  * @param {ListNode} l2
@@ -40,7 +41,7 @@ var mergeTwoLists = function (l1, l2) {
 		}
 		cur = cur.next;
 	}
-	cur = l1 ? l1 : l2;
+	cur.next = l1 ? l1 : l2;
 	return _head.next;
 };
 

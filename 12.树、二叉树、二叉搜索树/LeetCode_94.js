@@ -1,4 +1,5 @@
 // https://leetcode-cn.com/problems/binary-tree-inorder-traversal/
+// 给定一个二叉树的根节点 root ，返回 它的 中序 遍历 。
 
 /**
  * @param {TreeNode} root
@@ -10,39 +11,12 @@ var inorderTraversal = function (root) {
 	var result = [];
 	traversal(root);
 	return result;
-	function traversal (root) {
+	function traversal(root) {
 		if (!root) return;
 		traversal(root.left);
 		result.push(root.val);
 		traversal(root.right);
 	}
-};
-
-/**
- * @param {TreeNode} root
- * @return {number[]}
- */
-// 莫里斯遍历
-// 时间复杂度O(n) 空间复杂度O(1)
-var inorderTraversal = function (root) {
-	var cur = root,
-		result = [];
-	while (cur) {
-		if (cur.left) {
-			var pre = cur.left;
-			while (pre.right) {
-				pre = pre.right;
-			}
-			var tmp = cur;
-			pre.right = cur;
-			cur = cur.left;
-			tmp.left = null;
-		} else {
-			result.push(cur.val);
-			cur = cur.right;
-		}
-	}
-	return result;
 };
 
 /**
@@ -67,28 +41,61 @@ var inorderTraversal = function (root) {
 	return result;
 };
 
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+// 莫里斯遍历
+// 时间复杂度O(n) 空间复杂度O(1)
+var inorderTraversal = function (root) {
+	var cur = root,
+		predecessor = null,
+		result = [];
+	while (cur) {
+		if (cur.left) {
+			// predecessor 节点就是当前 root 节点向左走一步，然后一直向右走至无法走为止
+			predecessor = cur.left;
+			while (predecessor.right && predecessor.right !== root)
+				predecessor = predecessor.right;
+
+			if (!predecessor.right) { // 让 predecessor 的右指针指向 root，继续遍历左子树
+				predecessor.right = cur;
+				cur = cur.left;
+			} else { // 说明左子树已经访问完了，我们需要断开链接
+				result.push(cur.val);
+				predecessor.right = null;
+				cur = cur.right;
+			}
+		} else { // 如果没有左孩子，则直接访问右孩子
+			result.push(cur.val);
+			cur = cur.right;
+		}
+	}
+	return result;
+};
+
 // 节点
-function TreeNode (val) {
+function TreeNode(val) {
 	this.val = val;
 	this.left = null;
 	this.right = null;
 }
 
 // 二叉搜索树
-function SearchTree () {
+function SearchTree() {
 	this.root = null;
 }
 
 // 添加节点
 SearchTree.prototype.insert = function (val) {
-	if(val === null || val === undefined) return;
+	if (val === null || val === undefined) return;
 	var node = new TreeNode(val);
 	if (!this.root) {
 		this.root = node;
 		return;
 	}
 	var cur = this._getTreeNode(val);
-	if (val < cur.val) 
+	if (val < cur.val)
 		cur.left = node;
 	else
 		cur.right = node;
