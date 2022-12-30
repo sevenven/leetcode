@@ -1,4 +1,5 @@
 // https://leetcode-cn.com/problems/powx-n/
+// 实现 pow(x, n) ，即计算 x 的整数 n 次幂函数（即，xn ）。
 
 /**
  * @param {number} x
@@ -46,7 +47,7 @@ var myPow = function (x, n) {
  * @param {number} n
  * @return {number}
  */
-// 迭代法
+// 牛顿迭代法
 // 时间复杂度O(logn) 空间复杂度O(1)
 var myPow = function (x, n) {
 	var ans = 1;

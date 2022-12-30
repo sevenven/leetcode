@@ -1,17 +1,25 @@
 // https://leetcode-cn.com/problems/validate-binary-search-tree/
+// 给你一个二叉树的根节点 root ，判断其是否是一个有效的二叉搜索树。
+
+// 有效 二叉搜索树定义如下：
+// 节点的左子树只包含 小于 当前节点的数。
+// 节点的右子树只包含 大于 当前节点的数。
+// 所有左子树和右子树自身必须也是二叉搜索树。
 
 /**
  * @param {TreeNode} root
- * @param {TreeNode} prev
- * @param {TreeNode} next
  * @return {boolean}
  */
 // 递归
-var isValidBST = function(root, prev, next) {
-	if (root === null) return true;
-	if (prev && prev.val >= root.val) return false;
-	if (next && next.val <= root.val) return false;
-	return isValidBST(root.left, prev, root) && isValidBST(root.right, root, next);
+var isValidBST = function(root) {
+	return isValid(root, null, null);
+	function isValid (root, prev, next) {
+		if (!root) return true;
+		if (prev && prev.val >= root.val) return false; 
+		if (next && next.val <= root.val) return false;
+		// 由上向下递归，将当前节点值作为，左节点的最大限制值，右节点的最小限制值
+		return isValidBST(root.left, prev, root) && isValidBST(root.right, root, next);
+	}
 };
 
 /**

@@ -1,4 +1,5 @@
 // https://leetcode-cn.com/problems/binary-tree-level-order-traversal/
+// 给你二叉树的根节点 root ，返回其节点值的 层序遍历 。 （即逐层地，从左到右访问所有节点）。
 
 /**
  * @param {TreeNode} root
@@ -41,9 +42,7 @@ var levelOrder = function (root) {
 	return result;
 	function order (root, level) {
 		if (!root) return;
-		if (!result[level]) {
-			result[level] = [];
-		}
+		if (!result[level]) result[level] = [];
 		result[level].push(root.val);
 		order(root.left, level + 1);
 		order(root.right, level + 1);

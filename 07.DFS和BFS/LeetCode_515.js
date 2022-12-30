@@ -1,4 +1,5 @@
 // https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/
+// 给定一棵二叉树的根节点 root ，请找出该二叉树中每一层的最大值。
 
 /**
  * @param {TreeNode} root
@@ -33,7 +34,7 @@ var largestValues = function (root) {
  * @param {TreeNode} root
  * @return {number[]}
  */
-// DFS解法(LeetCode上更快)
+// DFS解法
 // 时间复杂度O(n) 空间复杂度O(logn) 
 var largestValues = function (root) {
 	var maxArr = [];

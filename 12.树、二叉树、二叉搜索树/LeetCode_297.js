@@ -16,8 +16,8 @@ var serialize = function (root) {
 };
 
 const rserialize = (root, str) => {
-	if (root === null) return str += "None,";
-	str += root.val + ",";
+	if (!root) return str += 'None,';
+	str += root.val + ',';
 	str = rserialize(root.left, str);
 	str = rserialize(root.right, str);
 	return str;
@@ -30,12 +30,12 @@ const rserialize = (root, str) => {
  * @return {TreeNode}
  */
 var deserialize = function (data) {
-	const dataList = data.split(",");
+	const dataList = data.split(',');
 	return rdeserialize(dataList);
 };
 
 const rdeserialize = (dataList) => {
-	if (dataList[0] === "None") {
+	if (dataList[0] === 'None') {
 		dataList.shift();
 		return null;
 	}
@@ -45,24 +45,3 @@ const rdeserialize = (dataList) => {
 	root.right = rdeserialize(dataList);
 	return root;
 }
-
-// BFS
-// 时间复杂度为 O(n) 空间复杂度为 O(n)
-
-/**
- * Encodes a tree to a single string.
- *
- * @param {TreeNode} root
- * @return {string}
- */
-var serialize = function (root) {
-};
-
-/**
- * Decodes your encoded data to tree.
- *
- * @param {string} data
- * @return {TreeNode}
- */
-var deserialize = function (data) {
-};

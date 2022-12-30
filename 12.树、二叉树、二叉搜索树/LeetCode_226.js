@@ -1,4 +1,5 @@
 // https://leetcode-cn.com/problems/invert-binary-tree/
+// 给你一棵二叉树的根节点 root ，翻转这棵二叉树，并返回其根节点。
 
 /**
  * @param {TreeNode} root
@@ -6,8 +7,8 @@
  */
 // 递归交换 
 // 时间复杂度O(logn) 空间复杂度O(logn)
-var invertTree = function(root) {
-	if (root === null) return;
+var invertTree = function (root) {
+	if (!root) return null;
 	var tmp = root.left;
 	root.left = root.right;
 	root.right = tmp;
@@ -22,40 +23,40 @@ var invertTree = function(root) {
  */
 // 迭代交换 
 // 时间复杂度O(logn) 空间复杂度O(logn)
-var invertTree = function(root) {
-	if (root === null) return null;
+var invertTree = function (root) {
+	if (!root) return null;
 	var queue = [root];
 	while (queue.length) {
 		var cur = queue.shift(),
 			tmp = cur.left;
 		cur.left = cur.right;
 		cur.right = tmp;
-		if(cur.left) queue.push(cur.left);
-		if(cur.right) queue.push(cur.right);
+		if (cur.left) queue.push(cur.left);
+		if (cur.right) queue.push(cur.right);
 	}
 	return root;
 };
 
 // 节点
-function TreeNode (val) {
+function TreeNode(val) {
 	this.val = val;
 	this.left = null;
 	this.right = null;
 }
 // 二叉搜索树
-function BinarySearchTree () {
+function BinarySearchTree() {
 	this.root = null;
 }
 // 添加节点
 BinarySearchTree.prototype.insert = function (val) {
-	if(val === null || val === undefined) return;
+	if (val === null || val === undefined) return;
 	var node = new TreeNode(val);
 	if (!this.root) {
 		this.root = node;
 		return;
 	}
 	var cur = this._getTreeNode(val);
-	if (val < cur.val) 
+	if (val < cur.val)
 		cur.left = node;
 	else
 		cur.right = node;

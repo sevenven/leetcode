@@ -119,10 +119,9 @@ function dfs(node) {
 	// 在此处写处理当前节点的逻辑
 	for (child of node.children)
 		dfs(child)
-	
 }
 栈实现方式js代码模板(其实就是前序遍历)
-function bfs(node) {
+function dfs(node) {
 	var stack = [],
 		visited = new Set();
 	stack.push(node);
