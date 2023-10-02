@@ -1,6 +1,14 @@
 // https://leetcode-cn.com/problems/linked-list-cycle-ii/
 // 给定一个链表的头节点  head ，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
 
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+
 // LeetCode速度：1.Floyd算法 2.哈希表
 
 /**
@@ -9,14 +17,14 @@
  */
 // 哈希表(使用ES6 Set) 时间复杂度O(n) 空间复杂度O(n)
 var detectCycle = function (head) {
-	var exist = new Set(),
-		cur = head;
-	while (cur) {
-		if (exist.has(cur)) return cur;
-		exist.add(cur);
-		cur = cur.next;
-	}
-	return null;
+  var exist = new Set(),
+    cur = head;
+  while (cur) {
+    if (exist.has(cur)) return cur;
+    exist.add(cur);
+    cur = cur.next;
+  }
+  return null;
 };
 
 /**
@@ -25,50 +33,48 @@ var detectCycle = function (head) {
  */
 // 快慢指针法 时间复杂度O(n) 空间复杂度O(1)
 var detectCycle = function (head) {
-	var intersect = getInterset(head);
-	if (!intersect) return null;
-	var ptr1 = head,
-		ptr2 = intersect;
-	while (ptr1 != ptr2) {
-		ptr1 = ptr1.next;
-		ptr2 = ptr2.next;
-	}
-	return ptr2;
+  var intersect = getInterset(head);
+  if (!intersect) return null;
+  var ptr1 = head,
+    ptr2 = intersect;
+  while (ptr1 != ptr2) {
+    ptr1 = ptr1.next;
+    ptr2 = ptr2.next;
+  }
+  return ptr2;
 };
 
-function getInterset (head) {
-	var fast = head,
-		slow = head;
-	while (fast && fast.next) {
-		fast = fast.next.next;
-		slow = slow.next;
-		if (fast === slow) return slow;
-	}
-	return null;
+function getInterset(head) {
+  var fast = head,
+    slow = head;
+  while (fast && fast.next) {
+    fast = fast.next.next;
+    slow = slow.next;
+    if (fast === slow) return slow;
+  }
+  return null;
 }
- 
 
 // 节点
 function ListNode(val) {
-	this.val = val;
-	this.next = null;
+  this.val = val;
+  this.next = null;
 }
 // 链表
 function LinkList() {
-	this.head = null;
+  this.head = null;
 }
 // 向链表节点末尾追加节点
 LinkList.prototype.append = function (val) {
-	var _new = new ListNode(val);
-	if (!this.head) {
-		this.head = _new;
-		return;
-	}
-	var cur = this.head;
-	while (cur.next)
-		cur = cur.next;
-	cur.next = _new;
-}
+  var _new = new ListNode(val);
+  if (!this.head) {
+    this.head = _new;
+    return;
+  }
+  var cur = this.head;
+  while (cur.next) cur = cur.next;
+  cur.next = _new;
+};
 
 var linkList = new LinkList();
 linkList.append(1);
@@ -79,7 +85,7 @@ linkList.append(5);
 
 var cur = linkList.head;
 while (cur.next) {
-	cur = cur.next;
+  cur = cur.next;
 }
 cur.next = linkList.head.next.next;
 

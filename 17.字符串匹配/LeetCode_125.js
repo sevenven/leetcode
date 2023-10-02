@@ -23,8 +23,12 @@ var isPalindrome = function (s) {
   return true;
 };
 
-function isLetterOrNumber (code) {
-  return (code >= 65 && code <= 90) || (code >= 97 && code <= 122) || (code >= 48 && code <= 57);
+function isLetterOrNumber(code) {
+  return (
+    (code >= 65 && code <= 90) ||
+    (code >= 97 && code <= 122) ||
+    (code >= 48 && code <= 57)
+  );
 }
 
 /**
@@ -34,7 +38,7 @@ function isLetterOrNumber (code) {
 // 方法二
 // 时间复杂度O(n) 空间复杂度O(n)
 var isPalindrome = function (s) {
-  var str = s.replace(/\W/g, '').toLowerCase(),
+  var str = s.replace(/\W/g, "").toLowerCase(),
     mid = Math.floor(str.length / 2);
   for (var i = 0; i < mid; i++) {
     if (str[i] !== str[str.length - 1 - i]) return false;
@@ -42,6 +46,6 @@ var isPalindrome = function (s) {
   return true;
 };
 
-console.log(isPalindrome('A man, a plan, a canal: Panama')); // true
-console.log(isPalindrome('race a car')); // false
-console.log(isPalindrome('')); // true
+console.log(isPalindrome("A man, a plan, a canal: Panama")); // true
+console.log(isPalindrome("race a car")); // false
+console.log(isPalindrome("")); // true

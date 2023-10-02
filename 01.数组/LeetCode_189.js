@@ -1,6 +1,5 @@
 // https://leetcode-cn.com/problems/rotate-array/
 // 给你一个数组，将数组中的元素向右轮转k个位置，其中k是非负数。
-// LeetCode速度：1.环形替换法 2.反转法 3.暴力解法
 
 /**
  * @param {number[]} nums
@@ -34,13 +33,11 @@ var rotate = function (nums, k) {
   reverse(nums, k, nums.length - 1);
 };
 
-function reverse(nums, start, end) {
-  while (start < end) {
-    let tmp = nums[start];
-    nums[start] = nums[end];
-    nums[end] = tmp;
-    start++;
-    end--;
+function reverse(nums, L, R) {
+  while (L < R) {
+    [nums[L], nums[R]] = [nums[R], nums[L]];
+    R--;
+    L++;
   }
 }
 
@@ -56,18 +53,16 @@ var rotate = function (nums, k) {
   let count = 0;
   for (let i = 0; count < nums.length; i++) {
     let curIndex = i,
-      cur = nums[i];
+      prev = nums[curIndex];
     do {
-      let moveIndex = (curIndex + k) % nums.length,
-        tmp = nums[moveIndex];
-      nums[moveIndex] = cur;
-      cur = tmp;
+      let moveIndex = (curIndex + k) % nums.length;
+      [prev, nums[moveIndex]] = [nums[moveIndex], prev];
       curIndex = moveIndex;
       count++;
-    } while (i !== curIndex);
+    } while (curIndex !== i);
   }
 };
 
-let arr = [1, 2, 3, 4, 5, 6];
+const arr = [1, 2, 3, 4, 5, 6];
 rotate(arr, 2);
 console.log(arr); // [ 5, 6, 1, 2, 3, 4 ]

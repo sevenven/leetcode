@@ -24,11 +24,12 @@ var twoSum = function (nums, target) {
  */
 // 使用对象实现快速查找 时间复杂度O(n) 空间复杂度O(n)
 var twoSum = function (nums, target) {
-  let exits = {};
+  const exits = {};
   for (let i = 0; i < nums.length; i++) exits[nums[i]] = i;
   for (let j = 0; j < nums.length; j++) {
-    let another = target - nums[j];
-    if (exits[another] && exits[another] !== j) return [j, exits[another]];
+    const another = target - nums[j];
+    if (exits[another] !== undefined && exits[another] !== j)
+      return [j, exits[another]];
   }
 };
 
@@ -39,13 +40,12 @@ var twoSum = function (nums, target) {
  */
 // 使用对象实现快速查找 时间复杂度O(n) 空间复杂度O(n) --> 代码优化
 var twoSum = function (nums, target) {
-  let exits = {};
+  const exits = {};
   for (let i = 0; i < nums.length; i++) {
-    let another = target - nums[i];
+    const another = target - nums[i];
     if (exits[another] !== undefined) return [exits[another], i];
     exits[nums[i]] = i;
   }
 };
 
-let res = twoSum([2, 7, 11, 15], 13); // [0, 2]
-console.log(res);
+console.log(twoSum([2, 7, 11, 15], 13)); // [0, 2]

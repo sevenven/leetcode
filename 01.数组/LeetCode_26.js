@@ -1,8 +1,8 @@
 // https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/
-// 给你一个升序排列的数组nums，请你原地删除重复出现的元素，使每个元素只出现一次，返回删除后数组的新长度。元素的相对顺序应该保持一致 。
-// 由于在某些语言中不能改变数组的长度，所以必须将结果放在数组nums的第一部分。更规范地说，如果在删除重复项之后有k个元素，那么nums的前k个元素应该保存最终结果。
-// 将最终结果插入nums的前k个位置后返回k 。
-// 不要使用额外的空间，你必须在原地修改输入数组并在使用O(1)额外空间的条件下完成。
+// 给你一个 非严格递增排列 的数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。然后返回 nums 中唯一元素的个数。
+// 考虑 nums 的唯一元素的数量为 k ，你需要做以下事情确保你的题解可以被通过：
+// 更改数组 nums ，使 nums 的前 k 个元素包含唯一元素，并按照它们最初在 nums 中出现的顺序排列。nums 的其余元素与 nums 的大小不重要。
+// 返回 k 。
 
 /**
  * @param {number[]} nums
@@ -11,15 +11,14 @@
 // 快慢指针法
 // 时间复杂度O(n) 空间复杂度O(1)
 var removeDuplicates = function (nums) {
-  if (!nums || !nums.length) return;
-  let pos = 0;
+  let k = 0;
   for (let i = 1; i < nums.length; i++) {
-    if (nums[pos] !== nums[i]) {
-      nums[++pos] = nums[i];
+    if (nums[k] !== nums[i]) {
+      nums[++k] = nums[i];
     }
   }
-  return (nums.length = pos + 1);
+  return k + 1;
 };
 
-let nums = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4];
+const nums = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4];
 console.log(removeDuplicates(nums), nums); // 5

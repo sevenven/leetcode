@@ -7,24 +7,6 @@
  * @param {number[]} digits
  * @return {number[]}
  */
-// 时间复杂度O(n) 空间复杂度O(1)
-var plusOne = function (digits) {
-  for (let i = digits.length - 1; i >= 0; i--) {
-    if (digits[i] + 1 === 10) {
-      digits[i] = 0;
-      if (i === 0) digits.unshift(1);
-    } else {
-      digits[i] += 1;
-      break;
-    }
-  }
-  return digits;
-};
-
-/**
- * @param {number[]} digits
- * @return {number[]}
- */
 // most vote
 // 时间复杂度O(n) 空间复杂度O(1)
 var plusOne = function (digits) {
@@ -41,5 +23,6 @@ var plusOne = function (digits) {
 };
 
 console.log(plusOne([1, 2, 3])); // [1, 2, 4]
+console.log(plusOne([9, 8, 9])); // [9, 9, 0]
 console.log(plusOne([9, 9, 9])); // [1, 0, 0, 0]
 console.log(plusOne([9])); // [1, 0]

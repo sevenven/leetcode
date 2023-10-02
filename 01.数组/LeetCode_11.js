@@ -29,8 +29,10 @@ var maxArea = function (height) {
     R = height.length - 1,
     maxarea = 0;
   while (L < R) {
-    let minHeight = height[L] < height[R] ? height[L++] : height[R--];
-    maxarea = Math.max(maxarea, (R - L + 1) * minHeight);
+    maxarea = Math.max(
+      maxarea,
+      (R - L) * (height[L] < height[R] ? height[L++] : height[R--])
+    );
   }
   return maxarea;
 };
