@@ -1,62 +1,56 @@
 // https://leetcode-cn.com/problems/merge-two-sorted-lists/
 // 将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。
 
-/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
+// function ListNode(val, next) {
+//   this.val = val;
+//   this.next = next || null;
+// }
 
 // LeetCode速度：1.递归写法 2.非递归写法
 /**
- * @param {ListNode} l1
- * @param {ListNode} l2
+ * @param {ListNode} list1
+ * @param {ListNode} list2
  * @return {ListNode}
  */
 // 递归写法
 // 时间复杂度O(n + m) 空间复杂度O(n + m)
-var mergeTwoLists = function (l1, l2) {
-  if (!l1) return l2;
-  if (!l2) return l1;
-  if (l1.val <= l2.val) {
-    l1.next = mergeTwoLists(l1.next, l2);
-    return l1;
+var mergeTwoLists = function (list1, list2) {
+  if (!list1 || !list2) return list1 || list2;
+  if (list1.val <= list2.val) {
+    list1.next = mergeTwoLists(list1.next, list2);
+    return list1;
   } else {
-    l2.next = mergeTwoLists(l1, l2.next);
-    return l2;
+    list2.next = mergeTwoLists(list1, list2.next);
+    return list2;
   }
 };
 
 /**
- * @param {ListNode} l1
- * @param {ListNode} l2
+ * @param {ListNode} list1
+ * @param {ListNode} list2
  * @return {ListNode}
  */
-// 非递归写法
-// 时间复杂度O(n + m) 空间复杂度O(1)
-var mergeTwoLists = function (l1, l2) {
-  var _head = new ListNode(null),
-    cur = _head;
-  while (l1 && l2) {
-    if (l1.val <= l2.val) {
-      cur.next = l1;
-      l1 = l1.next;
+var mergeTwoLists = function (list1, list2) {
+  if (!list1 || !list2) return list1 || list2;
+  let cur = (head = new ListNode());
+  while (list1 && list2) {
+    if (list1.val <= list2.val) {
+      cur.next = list1;
+      list1 = list1.next;
     } else {
-      cur.next = l2;
-      l2 = l2.next;
+      cur.next = list2;
+      list2 = list2.next;
     }
     cur = cur.next;
   }
-  cur.next = l1 ? l1 : l2;
-  return _head.next;
+  cur.next = list1 || list2;
+  return head.next;
 };
 
-// 节点
-function ListNode(val) {
+// 结点
+function ListNode(val, next) {
   this.val = val;
-  this.next = null;
+  this.next = next || null;
 }
 // 链表
 function LinkList() {

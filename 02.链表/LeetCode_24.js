@@ -1,13 +1,10 @@
 // https://leetcode-cn.com/problems/swap-nodes-in-pairs/
 // 给你一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。你必须在不修改节点内部的值的情况下完成本题（即，只能进行节点交换）。
 
-/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
+// function ListNode(val, next) {
+//   this.val = val;
+//   this.next = next || null;
+// }
 
 // LeetCode速度：1.递归写法 2.非递归写法
 
@@ -18,10 +15,10 @@
 // 递归解法 时间复杂度O(n) 空间复杂度O(n)
 var swapPairs = function (head) {
   if (!head || !head.next) return head;
-  var next = head.next;
-  head.next = swapPairs(next.next);
-  next.next = head;
-  return next;
+  const second = head.next;
+  head.next = swapPairs(second.next);
+  second.next = head;
+  return second;
 };
 
 /**
@@ -30,24 +27,24 @@ var swapPairs = function (head) {
  */
 // 非递归解法 时间复杂度O(n) 空间复杂度O(1)
 var swapPairs = function (head) {
-  var _head = new ListNode(null),
-    prev = _head;
-  prev.next = head;
+  let prev = (_head = new ListNode(0, head));
   while (prev.next && prev.next.next) {
-    var first = prev.next,
+    const first = prev.next,
       second = prev.next.next;
-    prev.next = second;
-    first.next = second.next;
-    second.next = first;
-    prev = first;
+    [prev.next, second.next, first.next, prev] = [
+      second,
+      first,
+      second.next,
+      first,
+    ];
   }
   return _head.next;
 };
 
-// 节点
-function ListNode(val) {
+// 结点
+function ListNode(val, next) {
   this.val = val;
-  this.next = null;
+  this.next = next || null;
 }
 // 链表
 function LinkList() {

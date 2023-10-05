@@ -1,13 +1,10 @@
 // https://leetcode-cn.com/problems/linked-list-cycle/
 // 给你一个链表的头节点 head ，判断链表中是否有环。
 
-/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
+// function ListNode(val, next) {
+//   this.val = val;
+//   this.next = next || null;
+// }
 
 // LeetCode速度：1.哈希表 2.快慢指针法
 
@@ -17,11 +14,11 @@
  */
 // 哈希表(使用ES6 Set) 时间复杂度O(n) 空间复杂度O(n)
 var hasCycle = function (head) {
-  var exist = new Set(),
-    cur = head;
+  let cur = head,
+    exits = new Set();
   while (cur) {
-    if (exist.has(cur)) return true;
-    exist.add(cur);
+    if (exits.has(cur)) return true;
+    exits.add(cur);
     cur = cur.next;
   }
   return false;
@@ -33,8 +30,7 @@ var hasCycle = function (head) {
  */
 // 快慢指针法 时间复杂度O(n) 空间复杂度O(1)
 var hasCycle = function (head) {
-  var fast = head,
-    slow = head;
+  let slow = (fast = head);
   while (fast && fast.next) {
     fast = fast.next.next;
     slow = slow.next;
@@ -43,10 +39,10 @@ var hasCycle = function (head) {
   return false;
 };
 
-// 节点
-function ListNode(val) {
+// 结点
+function ListNode(val, next) {
   this.val = val;
-  this.next = null;
+  this.next = next || null;
 }
 // 链表
 function LinkList() {

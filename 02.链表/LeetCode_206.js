@@ -1,13 +1,10 @@
 // https://leetcode-cn.com/problems/reverse-linked-list/
 // 给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
 
-/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
+// function ListNode(val, next) {
+//   this.val = val;
+//   this.next = next || null;
+// }
 
 // LeetCode速度：1.指向前一个节点 2.递归 3.头插法
 
@@ -30,13 +27,10 @@ var reverseList = function (head) {
  */
 // 将每个节点的next指向前一个节点 时间复杂度O(n) 空间复杂度O(1)
 var reverseList = function (head) {
-  var prev = null,
+  let prev = null,
     cur = head;
   while (cur) {
-    var next = cur.next;
-    cur.next = prev;
-    prev = cur;
-    cur = next;
+    [cur.next, prev, cur] = [prev, cur, cur.next];
   }
   return prev;
 };
@@ -47,21 +41,18 @@ var reverseList = function (head) {
  */
 // 每次给头节点添加节点 时间复杂度O(n) 空间复杂度O(1)
 var reverseList = function (head) {
-  var _head = new ListNode(null),
+  let _head = new ListNode(null),
     cur = head;
   while (cur) {
-    var next = cur.next;
-    cur.next = _head.next;
-    _head.next = cur;
-    cur = next;
+    [cur.next, _head.next, cur] = [_head.next, cur, cur.next];
   }
   return _head.next;
 };
 
-// 节点
-function ListNode(val) {
+// 结点
+function ListNode(val, next) {
   this.val = val;
-  this.next = null;
+  this.next = next || null;
 }
 // 链表
 function LinkList() {

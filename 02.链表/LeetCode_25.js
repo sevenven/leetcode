@@ -3,13 +3,10 @@
 // k 是一个正整数，它的值小于或等于链表的长度。如果节点总数不是 k 的整数倍，那么请将最后剩余的节点保持原有顺序。
 // 你不能只是单纯的改变节点内部的值，而是需要实际进行节点交换。
 
-/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
+// function ListNode(val, next) {
+//   this.val = val;
+//   this.next = next || null;
+// }
 
 /**
  * @param {ListNode} head
@@ -18,40 +15,36 @@
  */
 // 非递归解法 时间复杂度O(n) 空间复杂度O(1)
 var reverseKGroup = function (head, k) {
-  var _head = new ListNode(null),
-    prev = _head,
-    end = _head;
-  prev.next = head;
+  let prev = (end = _head = new ListNode(null, head));
   while (end) {
-    for (var i = 0; i < k && end; i++) end = end.next;
+    for (let i = 0; i < k && end; i++) end = end.next;
     if (!end) break;
-    var start = prev.next,
-      next = end.next;
+    let first = prev.next;
+    let second = end.next;
     end.next = null;
-    prev.next = reverseList(start);
-    start.next = next;
-    prev = start;
-    end = start;
+    [prev.next, first.next, prev, end] = [
+      reverseList(first),
+      second,
+      first,
+      first,
+    ];
   }
   return _head.next;
 };
 
 function reverseList(head) {
-  var prev = null,
+  let prev = null,
     cur = head;
   while (cur) {
-    var next = cur.next;
-    cur.next = prev;
-    prev = cur;
-    cur = next;
+    [cur.next, prev, cur] = [prev, cur, cur.next];
   }
   return prev;
 }
 
 // 节点
-function ListNode(val) {
+function ListNode(val, next) {
   this.val = val;
-  this.next = null;
+  this.next = next || null;
 }
 // 链表
 function LinkList() {
@@ -80,5 +73,3 @@ linkList.append(7);
 
 var result = reverseKGroup(linkList.head, 3);
 console.log(result);
-console.log(result.next.next.next);
-console.log(result.next.next.next.next.next.next);

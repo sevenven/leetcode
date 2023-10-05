@@ -1,13 +1,10 @@
 // https://leetcode-cn.com/problems/linked-list-cycle-ii/
 // 给定一个链表的头节点  head ，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
 
-/**
- * Definition for singly-linked list.
- * function ListNode(val, next) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.next = (next===undefined ? null : next)
- * }
- */
+// function ListNode(val, next) {
+//   this.val = val;
+//   this.next = next || null;
+// }
 
 // LeetCode速度：1.Floyd算法 2.哈希表
 
@@ -33,32 +30,30 @@ var detectCycle = function (head) {
  */
 // 快慢指针法 时间复杂度O(n) 空间复杂度O(1)
 var detectCycle = function (head) {
-  var intersect = getInterset(head);
-  if (!intersect) return null;
-  var ptr1 = head,
-    ptr2 = intersect;
-  while (ptr1 != ptr2) {
+  let ptr1 = getIntersection(head);
+  if (!ptr1) return null;
+  let ptr2 = head;
+  while (ptr1 !== ptr2) {
     ptr1 = ptr1.next;
     ptr2 = ptr2.next;
   }
-  return ptr2;
+  return ptr1;
 };
 
-function getInterset(head) {
-  var fast = head,
-    slow = head;
+function getIntersection(head) {
+  let slow = (fast = head);
   while (fast && fast.next) {
     fast = fast.next.next;
     slow = slow.next;
-    if (fast === slow) return slow;
+    if (fast === slow) return fast;
   }
   return null;
 }
 
-// 节点
-function ListNode(val) {
+// 结点
+function ListNode(val, next) {
   this.val = val;
-  this.next = null;
+  this.next = next || null;
 }
 // 链表
 function LinkList() {
