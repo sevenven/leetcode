@@ -50,7 +50,7 @@ function getIntersection(head) {
   return null;
 }
 
-// 结点
+// 节点
 function ListNode(val, next) {
   this.val = val;
   this.next = next || null;

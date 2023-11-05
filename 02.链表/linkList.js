@@ -1,7 +1,7 @@
-// 不带头结点的单链表
+// 不带头节点的单链表
 // 比较简易的实现 默认不往链表中添加值重复的元素 默认非环形链表
 
-// 结点
+// 节点
 function ListNode(val, next) {
   this.val = val;
   this.next = next || null;
@@ -12,7 +12,7 @@ function LinkList() {
   this.head = null;
 }
 
-// 向链表节点末尾追加结点
+// 向链表节点末尾追加节点
 LinkList.prototype.append = function (val) {
   const node = new ListNode(val);
   if (this.head === null) {
@@ -35,14 +35,14 @@ LinkList.prototype.insert = function (val, newVal) {
   [node.next, cur.next] = [cur.next, node];
 };
 
-// 根据value查找结点
+// 查找节点
 LinkList.prototype.findByValue = function (val) {
   let cur = this.head;
   while (cur && cur.val != val) cur = cur.next;
   return cur;
 };
 
-// 根据index查找结点 下标从0开始
+// 访问节点
 LinkList.prototype.findByIndex = function (index) {
   let cur = this.head,
     count = 0;
@@ -53,14 +53,14 @@ LinkList.prototype.findByIndex = function (index) {
   return cur;
 };
 
-// 查找前一个结点
+// 查找前一个节点
 LinkList.prototype.findPrev = function (val) {
   let cur = this.head;
   while (cur.next && cur.next.val != val) cur = cur.next;
   return cur.next ? cur : null;
 };
 
-// 查找中间结点
+// 查找中间节点
 LinkList.prototype.findMiddle = function () {
   var slow = this.head,
     fast = this.head;
@@ -82,7 +82,7 @@ LinkList.prototype.findIndexFromEnd = function (n) {
   return slow;
 };
 
-// 删除指定值的结点
+// 删除指定值的节点
 LinkList.prototype.remove = function (val) {
   if (this.head.val === val) {
     this.head = this.head.next;
@@ -92,7 +92,7 @@ LinkList.prototype.remove = function (val) {
   if (prev && prev.next) prev.next = prev.next.next;
 };
 
-// 删除指定index的结点
+// 删除指定index的节点
 LinkList.prototype.removeIndex = function (index) {
   if (index === 0) {
     this.head = this.head.next;
@@ -102,7 +102,7 @@ LinkList.prototype.removeIndex = function (index) {
   if (prev && prev.next) prev.next = prev.next.next;
 };
 
-// 删除倒数第n个结点---最后一个是倒数第一个
+// 删除倒数第n个节点---最后一个是倒数第一个
 LinkList.prototype.removeIndexFromEnd = function (n) {
   let slow = (fast = head);
   for (let i = 0; i < n; i++) fast = fast.next;

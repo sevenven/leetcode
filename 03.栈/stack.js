@@ -1,30 +1,30 @@
-function Stack () {
-	this.elements = [];
+function Stack() {
+  this.elements = [];
 }
 
 Stack.prototype.push = function (element) {
-	this.elements.push(element)
-}
+  this.elements.push(element);
+};
 
 Stack.prototype.pop = function () {
-	return this.elements.pop();
-}
+  return this.elements.pop();
+};
 
-Stack.prototype.top = function () {
-	return this.elements[this.elements.length-1];
-}
+Stack.prototype.peek = function () {
+  return this.elements[this.elements.length - 1];
+};
 
 Stack.prototype.isEmpty = function () {
-	return this.elements.length === 0;
-}
+  return this.elements.length === 0;
+};
 
 Stack.prototype.size = function () {
-	return this.elements.length;
-}
+  return this.elements.length;
+};
 
 Stack.prototype.clear = function () {
-	this.elements.length = 0;
-}
+  this.elements.length = 0;
+};
 
 var stack = new Stack();
 stack.push(1);

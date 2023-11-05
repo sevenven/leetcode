@@ -9,19 +9,19 @@
  */
 // 暴力破解 时间复杂度O(n^3) 空间复杂度O(1)
 var threeSum = function (nums) {
-  var result = [];
-  // 排序
+  const result = [];
+  // 排序----改变了入参-实际写业务代码的时候一定要慎重
   nums.sort((a, b) => a - b);
   // 三重for循环
   for (let i = 0; i < nums.length - 2; i++) {
+    if (nums[i] > 0) break;
     if (i > 0 && nums[i] === nums[i - 1]) continue;
     for (let j = i + 1; j < nums.length - 1; j++) {
       if (j > i + 1 && nums[j] === nums[j - 1]) continue;
       for (let k = j + 1; k < nums.length; k++) {
-        if (nums[i] + nums[j] + nums[k] === 0) {
+        if (nums[i] + nums[j] + nums[k] === 0)
           result.push([nums[i], nums[j], nums[k]]);
-          while (nums[k + 1] === nums[k]) k++;
-        }
+        while (nums[k + 1] === nums[k]) k++;
       }
     }
   }
@@ -35,12 +35,13 @@ var threeSum = function (nums) {
 // 排序加hash表 时间复杂度O(n^2) 空间复杂度O(n)
 // a + b + c = 0 -> a + b = -c
 var threeSum = function (nums) {
-  var result = [];
+  const result = [];
+  // 排序----改变了入参-实际写业务代码的时候一定要慎重
   nums.sort((a, b) => a - b);
   for (let i = 0; i < nums.length - 1; i++) {
     if (nums[i] > 0) break;
     if (i > 0 && nums[i] === nums[i - 1]) continue;
-    let exits = {};
+    const exits = {};
     for (let j = i + 1; j < nums.length; j++) {
       const another = -nums[i] - nums[j];
       if (exits[another] !== undefined) {
@@ -59,8 +60,9 @@ var threeSum = function (nums) {
  */
 // 排序加双指针 时间复杂度O(n^2) 空间复杂度O(1)----看着时间复杂度一样-->其实这个跑的比hash表那个快
 var threeSum = function (nums) {
-  let result = [];
-  nums.sort((a, b) => a - b); // 改变了入参-实际写业务代码的时候一定要慎重
+  const result = [];
+  // 排序----改变了入参-实际写业务代码的时候一定要慎重
+  nums.sort((a, b) => a - b);
   for (let i = 0; i < nums.length; i++) {
     if (nums[i] > 0) break;
     if (i > 0 && nums[i] === nums[i - 1]) continue;
@@ -70,8 +72,8 @@ var threeSum = function (nums) {
       let sum = nums[i] + nums[L] + nums[R];
       if (sum === 0) {
         result.push([nums[i], nums[L], nums[R]]);
-        while (L < R && nums[L] === nums[L + 1]) L++;
-        while (L < R && nums[R] === nums[R - 1]) R--;
+        while (L < R && nums[L + 1] === nums[L]) L++;
+        while (L < R && nums[R - 1] === nums[R]) R--;
         L++;
         R--;
       } else if (sum < 0) {

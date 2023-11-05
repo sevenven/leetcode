@@ -39,7 +39,7 @@ var hasCycle = function (head) {
   return false;
 };
 
-// 结点
+// 节点
 function ListNode(val, next) {
   this.val = val;
   this.next = next || null;

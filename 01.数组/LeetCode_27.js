@@ -8,7 +8,15 @@
  * @param {number} val
  * @return {number}
  */
-var removeElement = function (nums, val) {};
+// 快慢指针法
+// 时间复杂度O(n) 空间复杂度O(1)
+var removeElement = function (nums, val) {
+  let k = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] !== val) nums[k++] = nums[i];
+  }
+  return k;
+};
 
 const nums = [0, 1, 2, 2, 3, 0, 4, 2];
 console.log(removeElement(nums, 2), nums);

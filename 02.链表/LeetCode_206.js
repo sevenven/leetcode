@@ -49,7 +49,7 @@ var reverseList = function (head) {
   return _head.next;
 };
 
-// 结点
+// 节点
 function ListNode(val, next) {
   this.val = val;
   this.next = next || null;

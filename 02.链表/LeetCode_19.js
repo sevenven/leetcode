@@ -1,5 +1,5 @@
 // https://leetcode.cn/problems/remove-nth-node-from-end-of-list/
-// 给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。
+// 给你一个链表，删除链表的倒数第 n 个节点，并且返回链表的头节点。
 
 // function ListNode(val, next) {
 //   this.val = val;

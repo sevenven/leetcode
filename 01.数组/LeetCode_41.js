@@ -32,14 +32,14 @@ var firstMissingPositive = function (nums) {
     if (
       nums[i] > 0 &&
       nums[i] <= nums.length &&
-      nums[i] !== nums[correctIndex] // 当前循环的数字在(0, nums.length]区间内且当前循环数字不等于即将交换位置的数字
+      nums[i] !== nums[correctIndex] // 当前循环的数字在(0, nums.length]区间内且当前循环数字不在correctIndex上
     ) {
       [nums[i], nums[correctIndex]] = [nums[correctIndex], nums[i]]; // 交换一下位置
     } else {
       i++;
     }
   }
-  for (let i = 0; i < nums.length; i++) {
+  for (i = 0; i < nums.length; i++) {
     // 第一个nums[i] !== i + 1的数即为答案
     if (nums[i] !== i + 1) return i + 1;
   }

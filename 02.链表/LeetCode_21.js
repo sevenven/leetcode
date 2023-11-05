@@ -47,7 +47,7 @@ var mergeTwoLists = function (list1, list2) {
   return head.next;
 };
 
-// 结点
+// 节点
 function ListNode(val, next) {
   this.val = val;
   this.next = next || null;
