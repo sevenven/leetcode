@@ -11,14 +11,14 @@
  * @param {number} n
  * @return {ListNode}
  */
+// 时间复杂度O() 空间复杂度O()
 var removeNthFromEnd = function (head, n) {
   let slow = (fast = head);
   for (let i = 0; i < n; i++) fast = fast.next;
   if (!fast) return head.next;
-  while (fast && fast.next) {
-    slow = slow.next;
-    fast = fast.next;
+  while (fast.next) {
+    [slow, fast] = [slow.next, fast.next];
   }
-  slow.next = slow.next.next || null;
+  slow.next = slow.next.next;
   return head;
 };

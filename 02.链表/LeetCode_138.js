@@ -29,19 +29,22 @@ var copyRandomList = function (head, cached = new Map()) {
  * @param {Node} head
  * @return {Node}
  */
-var copyRandomList = function (head, cached = new Map()) {
+var copyRandomList = function (head) {
   if (!head) return null;
-  for (let cur = head; cur; cur = cur.next.next) {
+  for (let cur = head; cur; cur = cur.next.next)
     cur.next = new Node(cur.val, cur.next, null);
-  }
-  for (let cur = head; cur; cur = cur.next.next) {
-    cur.next.random = cur.random ? cur.random.next : null;
-  }
-  const _head = head.next;
-  for (let cur = head; cur; cur = cur.next) {
-    const _new = cur.next;
-    cur.next = cur.next.next;
-    _new.next = _new.next ? _new.next.next : null;
+  for (let cur = head; cur; cur = cur.next.next)
+    cur.next.random = cur.random?.next || null;
+  let _head = head.next,
+    cur = head,
+    _new;
+  while (cur) {
+    _new = cur.next;
+    [cur.next, cur, _new.next] = [
+      _new.next,
+      _new.next,
+      _new.next?.next || null,
+    ];
   }
   return _head;
 };

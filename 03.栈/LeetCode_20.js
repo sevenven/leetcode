@@ -13,9 +13,9 @@
 // 使用了正则表达式 会很慢
 var isValid = function (str) {
   while (str) {
-    let _str = str;
+    let temp = str;
     str = str.replace(/\(\)/, "").replace(/\{\}/, "").replace(/\[\]/, "");
-    if (_str === str) return false;
+    if (temp === str) return false;
   }
   return true;
 };
@@ -26,12 +26,12 @@ var isValid = function (str) {
  */
 // 左括号入栈 时间复杂度O(n) 空间复杂度O(n)
 var isValid = function (str) {
-  let parentheses = { "(": ")", "[": "]", "{": "}" },
+  const parenthesis = { "(": ")", "[": "]", "{": "}" },
     stack = [];
   for (s of str) {
-    if (parentheses[s]) {
+    if (parenthesis[s]) {
       stack.push(s);
-    } else if (!stack.length || s !== parentheses[stack.pop()]) {
+    } else if (!stack.length || s !== parenthesis[stack.pop()]) {
       return false;
     }
   }
@@ -44,11 +44,11 @@ var isValid = function (str) {
  */
 // 右括号入栈 时间复杂度O(n) 空间复杂度O(n)
 var isValid = function (str) {
-  let parentheses = { "(": ")", "[": "]", "{": "}" },
+  const parenthesis = { "(": ")", "[": "]", "{": "}" },
     stack = [];
-  for (var s of str) {
-    if (parentheses[s]) {
-      stack.push(parentheses[s]);
+  for (s of str) {
+    if (parenthesis[s]) {
+      stack.push(parenthesis[s]);
     } else if (!stack.length || s !== stack.pop()) {
       return false;
     }
@@ -58,4 +58,4 @@ var isValid = function (str) {
 
 console.log(isValid("()[]{}")); // true
 console.log(isValid("([)]")); // false
-console.log(isValid("")); //true
+console.log(isValid("")); // true

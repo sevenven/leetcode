@@ -9,16 +9,15 @@
 // 暴力破解 自己移动元素
 // 时间复杂度O(n^2) 空间复杂度O(1)
 var moveZeroes = function (nums) {
-  var len = nums.length;
-  for (var i = 0; i < len - 1; i++) {
-    if (nums[i] === 0) {
-      for (var j = i + 1; j < len; j++) {
-        nums[j - 1] = nums[j];
-      }
-      nums[len - 1] = 0;
-      i--;
-      len--;
+  let len = nums.length;
+  for (let i = 0; i < len - 1; i++) {
+    if (nums[i] !== 0) continue;
+    for (let j = i + 1; j < len; j++) {
+      nums[j - 1] = nums[j];
     }
+    nums[len - 1] = 0;
+    i--;
+    len--;
   }
 };
 
@@ -30,10 +29,8 @@ var moveZeroes = function (nums) {
 var moveZeroes = function (nums) {
   let k = 0;
   for (let i = 0; i < nums.length; i++) {
-    if (nums[i] !== 0) {
-      if (k !== i) [nums[k], nums[i]] = [nums[i], 0];
-      k++;
-    }
+    if (nums[i] === 0) continue;
+    [nums[k], nums[i]] = [nums[i], nums[k]];
   }
 };
 

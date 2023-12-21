@@ -14,10 +14,9 @@
  */
 // 递归解法 时间复杂度O(n) 空间复杂度O(n)
 var swapPairs = function (head) {
-  if (!head || !head.next) return head;
+  if (!head?.next) return head;
   const second = head.next;
-  head.next = swapPairs(second.next);
-  second.next = head;
+  [second.next, head.next] = [head, swapPairs(head.next.next)];
   return second;
 };
 
@@ -27,10 +26,11 @@ var swapPairs = function (head) {
  */
 // 非递归解法 时间复杂度O(n) 空间复杂度O(1)
 var swapPairs = function (head) {
-  let prev = (_head = new ListNode(0, head));
-  while (prev.next && prev.next.next) {
-    const first = prev.next,
-      second = prev.next.next;
+  let _head = (prev = new ListNode(null, head)),
+    first,
+    second;
+  while (prev?.next?.next) {
+    [first, second] = [prev.next, prev.next.next];
     [prev.next, second.next, first.next, prev] = [
       second,
       first,

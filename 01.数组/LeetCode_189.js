@@ -9,9 +9,9 @@
 // 暴力解法
 // 时间复杂度O(k*n) 空间复杂度O(1)
 var rotate = function (nums, k) {
-  k = k % nums.length;
-  for (let i = 0; i < k; i++) {
-    let tmp = nums[nums.length - 1];
+  let tmp;
+  for (let i = 0; i < k % nums.length; i++) {
+    tmp = nums[nums.length - 1];
     for (let j = nums.length - 2; j >= 0; j--) {
       nums[j + 1] = nums[j];
     }
@@ -25,7 +25,7 @@ var rotate = function (nums, k) {
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 // 反转法
-// 时间复杂度O(n) 空间复杂度O(1)
+// 时间复杂度O(n) 空间复杂度
 var rotate = function (nums, k) {
   k = k % nums.length;
   reverse(nums, 0, nums.length - 1);
@@ -50,14 +50,15 @@ function reverse(nums, L, R) {
 // 时间复杂度O(n) 空间复杂度O(1)
 var rotate = function (nums, k) {
   k = k % nums.length;
-  let count = 0;
+  let count = 0,
+    cur,
+    curIndex,
+    moveIndex;
   for (let i = 0; count < nums.length; i++) {
-    let curIndex = i,
-      prev = nums[curIndex];
+    cur = nums[(curIndex = i)];
     do {
-      let moveIndex = (curIndex + k) % nums.length;
-      [prev, nums[moveIndex]] = [nums[moveIndex], prev];
-      curIndex = moveIndex;
+      moveIndex = (curIndex + k) % nums.length;
+      [nums[moveIndex], cur, curIndex] = [cur, nums[moveIndex], moveIndex];
       count++;
     } while (curIndex !== i);
   }

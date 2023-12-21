@@ -16,17 +16,17 @@
  * Initialize your data structure here.
  */
 var MyQueue = function () {
-	this.stack = [];
-	this.tmp = [];
+  this.stack = [];
+  this.temp = [];
 };
 
 /**
- * Push element x to the back of queue. 
+ * Push element x to the back of queue.
  * @param {number} element
  * @return {void}
  */
 MyQueue.prototype.push = function (element) {
-	this.stack.push(element);
+  this.stack.push(element);
 };
 
 /**
@@ -34,14 +34,14 @@ MyQueue.prototype.push = function (element) {
  * @return {number}
  */
 MyQueue.prototype.pop = function () {
-	while (this.stack.length > 1) {
-		this.tmp.push(this.stack.pop());
-	}
-	var element = this.stack.pop();
-	while (this.tmp.length !== 0) {
-		this.stack.push(this.tmp.pop());
-	}
-	return element;
+  while (this.stack.length) {
+    this.temp.push(this.stack.pop());
+  }
+  let element = this.stack.pop();
+  while (this.temp.length) {
+    this.stack.push(this.temp.pop());
+  }
+  return element;
 };
 
 /**
@@ -49,16 +49,15 @@ MyQueue.prototype.pop = function () {
  * @return {number}
  */
 MyQueue.prototype.peek = function () {
-	// while (this.stack.length > 1) {
-	// 	this.tmp.push(this.stack.pop());
-	// }
-	// var element = this.stack.pop();
-	// this.tmp.push(element);
-	// while (this.tmp.length !== 0) {
-	// 	this.stack.push(this.tmp.pop());
-	// }
-	// return element;
-	return this.stack.length ? this.stack[0] : undefined;
+  while (this.stack.length) {
+    this.temp.push(this.stack.pop());
+  }
+  let element = this.stack.pop();
+  this.temp.push(element);
+  while (this.temp.length) {
+    this.stack.push(this.temp.pop());
+  }
+  return element;
 };
 
 /**
@@ -66,7 +65,7 @@ MyQueue.prototype.peek = function () {
  * @return {boolean}
  */
 MyQueue.prototype.empty = function () {
-	return !this.stack.length;
+  return !this.stack.length;
 };
 
 var obj = new MyQueue();

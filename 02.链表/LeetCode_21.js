@@ -12,8 +12,7 @@
  * @param {ListNode} list2
  * @return {ListNode}
  */
-// 递归写法
-// 时间复杂度O(n + m) 空间复杂度O(n + m)
+// 递归写法 时间复杂度O(n) 空间复杂度O(n): 栈帧空间O(n)
 var mergeTwoLists = function (list1, list2) {
   if (!list1 || !list2) return list1 || list2;
   if (list1.val <= list2.val) {
@@ -30,21 +29,19 @@ var mergeTwoLists = function (list1, list2) {
  * @param {ListNode} list2
  * @return {ListNode}
  */
+// 非递归写法 时间复杂度O(n) 空间复杂度O(1): 暂存数据O(1)
 var mergeTwoLists = function (list1, list2) {
-  if (!list1 || !list2) return list1 || list2;
-  let cur = (head = new ListNode());
+  let _head = (cur = new ListNode());
   while (list1 && list2) {
     if (list1.val <= list2.val) {
-      cur.next = list1;
-      list1 = list1.next;
+      [cur.next, list1] = [list1, list1.next];
     } else {
-      cur.next = list2;
-      list2 = list2.next;
+      [cur.next, list2] = [list2, list2.next];
     }
     cur = cur.next;
   }
   cur.next = list1 || list2;
-  return head.next;
+  return _head.next;
 };
 
 // 节点

@@ -13,39 +13,43 @@
  * initialize your data structure here.
  */
 var MinStack = function () {
-	this.element = [];
+  this.element = [];
 };
 
-/** 
-* @param {number} val
-* @return {void}
-*/
+/**
+ * @param {number} val
+ * @return {void}
+ */
 MinStack.prototype.push = function (val) {
-	this.element.push({
-		val,
-		min: this.element.length ? Math.min(val, this.getMin()) : val
-	})
+  this.element.push({
+    val,
+    min: this.element.length ? Math.min(val, this.getMin()) : val,
+  });
 };
 
 /**
-* @return {void}
-*/
+ * @return {void}
+ */
 MinStack.prototype.pop = function () {
-	return this.element.length ? this.element.pop().val : undefined
+  return this.element.length ? this.element.pop().val : undefined;
 };
 
 /**
-* @return {number}
-*/
+ * @return {number}
+ */
 MinStack.prototype.top = function () {
-	return this.element.length ? this.element[this.element.length - 1].val : undefined
+  return this.element.length
+    ? this.element[this.element.length - 1].val
+    : undefined;
 };
 
 /**
-* @return {number}
-*/
+ * @return {number}
+ */
 MinStack.prototype.getMin = function () {
-	return this.element.length ? this.element[this.element.length - 1].min : undefined
+  return this.element.length
+    ? this.element[this.element.length - 1].min
+    : undefined;
 };
 
 var minStack = new MinStack();

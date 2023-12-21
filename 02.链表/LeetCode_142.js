@@ -6,15 +6,13 @@
 //   this.next = next || null;
 // }
 
-// LeetCode速度：1.Floyd算法 2.哈希表
-
 /**
  * @param {ListNode} head
  * @return {ListNode}
  */
 // 哈希表(使用ES6 Set) 时间复杂度O(n) 空间复杂度O(n)
 var detectCycle = function (head) {
-  var exist = new Set(),
+  let exist = new Set(),
     cur = head;
   while (cur) {
     if (exist.has(cur)) return cur;
@@ -29,22 +27,22 @@ var detectCycle = function (head) {
  * @return {ListNode}
  */
 // 快慢指针法 时间复杂度O(n) 空间复杂度O(1)
+// f = 2s = s + nb --> s = nb
+// k = a + nb ---> s需要再走a步到入口出
 var detectCycle = function (head) {
   let ptr1 = getIntersection(head);
   if (!ptr1) return null;
   let ptr2 = head;
   while (ptr1 !== ptr2) {
-    ptr1 = ptr1.next;
-    ptr2 = ptr2.next;
+    [ptr1, ptr2] = [ptr1.next, ptr2.next];
   }
   return ptr1;
 };
 
 function getIntersection(head) {
   let slow = (fast = head);
-  while (fast && fast.next) {
-    fast = fast.next.next;
-    slow = slow.next;
+  while (fast?.next) {
+    [slow, fast] = [slow.next, fast.next.next];
     if (fast === slow) return fast;
   }
   return null;

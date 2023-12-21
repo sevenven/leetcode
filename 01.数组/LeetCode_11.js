@@ -25,9 +25,9 @@ var maxArea = function (height) {
  */
 // 双指针法 时间复杂度O(n) 空间复杂度O(1)
 var maxArea = function (height) {
-  let L = 0,
-    R = height.length - 1,
-    maxarea = 0;
+  let maxarea = 0,
+    L = 0,
+    R = height.length - 1;
   while (L < R) {
     maxarea = Math.max(
       maxarea,
@@ -37,5 +37,4 @@ var maxArea = function (height) {
   return maxarea;
 };
 
-let maxarea = maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]); // 49
-console.log(maxarea);
+console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]));

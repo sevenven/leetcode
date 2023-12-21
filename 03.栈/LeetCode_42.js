@@ -27,9 +27,9 @@ var trap = function (height) {
  */
 // 遍历存储每个格子的左边最高墙和右边最高墙 时间复杂度O(n) 空间复杂度O(n)
 var trap = function (height) {
-  let maxLeft = [],
-    maxRight = [],
-    ans = 0;
+  let ans = 0,
+    maxLeft = [],
+    maxRight = [];
   maxLeft[0] = height[0];
   for (let i = 1; i < height.length - 1; i++) {
     maxLeft[i] = Math.max(maxLeft[i - 1], height[i]);
@@ -49,25 +49,21 @@ var trap = function (height) {
  * @return {number}
  */
 // 双指针法 时间复杂度O(n) 空间复杂度O(1)
-// 假设两柱子分别为 i，j。那么就有 iMaxLeft,iMaxRight,jMaxLeft,jMaxRight 这个变量。
-// 如果 i <= j, 由于j在iMaxRight里，则 iMaxLeft <= iMaxRight 可知i点接水情况
-// 否则 jMaxLeft >= jMaxRight 可知j点接水情况
-// 而上面我们实际上只用到了 iMaxLeft，jMaxRight 两个变量，故我们维护这两个即可。
 var trap = function (height) {
   let ans = 0,
-    left = 0,
-    right = height.length - 1,
+    L = 0,
+    R = height.length - 1,
     maxLeft = 0,
     maxRight = 0;
-  while (left < right) {
-    if (height[left] <= height[right]) {
-      maxLeft = Math.max(maxLeft, height[left]);
-      ans += maxLeft - height[left];
-      left++;
+  while (L < R) {
+    if (height[L] <= height[R]) {
+      maxLeft = Math.max(maxLeft, height[L]);
+      ans += maxLeft - height[L];
+      L++;
     } else {
-      maxRight = Math.max(maxRight, height[right]);
-      ans += maxRight - height[right];
-      right--;
+      maxRight = Math.max(maxRight, height[R]);
+      ans += maxRight - height[R];
+      R--;
     }
   }
   return ans;
@@ -85,9 +81,9 @@ var trap = function (height) {
     while (stack.length > 0 && height[i] > height[stack.top()]) {
       let cur = stack.pop();
       if (stack.length === 0) break;
-      let width = i - stack.top() - 1;
-      let minHeight = Math.min(height[stack.top()], height[i]);
-      ans += width * (minHeight - height[cur]);
+      ans +=
+        (i - stack.top() - 1) *
+        (Math.min(height[stack.top()], height[i]) - height[cur]);
     }
     stack.push(i);
   }

@@ -7,15 +7,14 @@
 //   this.next = next || null;
 // }
 
-// 按理说几种方法时间复杂度是递减的 实际上LeetCode上跑出来的时间大差不差
-
 /**
  * @param {ListNode[]} lists
  * @return {ListNode}
  */
 // 暴力求解
+// 时间复杂度O(nlogn) 空间复杂度O(n): 暂存空间O(n)-输出空间O(n)
 var mergeKLists = function (lists) {
-  let cur = (head = new ListNode()),
+  let head = (cur = new ListNode()),
     vals = [];
   // 时间复杂度O(n) 空间复杂度O(n)
   for (list of lists) {
@@ -39,6 +38,7 @@ var mergeKLists = function (lists) {
  * @return {ListNode}
  */
 // 逐一两两合并链表
+// 时间复杂度O(m * n) 空间复杂度O(1): 暂存数据O(1)
 /**
  * @param {ListNode[]} lists
  * @return {ListNode}
@@ -52,14 +52,17 @@ var mergeKLists = function (lists) {
 };
 
 function mergeTwoList(list1, list2) {
-  if (!list1 || !list2) return list1 || list2;
-  if (list1.val <= list2.val) {
-    list1.next = mergeTwoList(list1.next, list2);
-    return list1;
-  } else {
-    list2.next = mergeTwoList(list1, list2.next);
-    return list2;
+  let _head = (cur = new ListNode());
+  while (list1 && list2) {
+    if (list1.val <= list2.val) {
+      [cur.next, list1] = [list1, list1.next];
+    } else {
+      [cur.next, list2] = [list2, list2.next];
+    }
+    cur = cur.next;
   }
+  cur.next = list1 || list2;
+  return _head.next;
 }
 
 /**
@@ -67,12 +70,13 @@ function mergeTwoList(list1, list2) {
  * @return {ListNode}
  */
 // 分治合并链表
+// 时间复杂度O(nlogn) 空间复杂度O(logn): 栈帧空间O(logn) 暂存数据O(1)
 /**
  * @param {ListNode[]} lists
  * @return {ListNode}
  */
-var mergeKLists = function (lists, L = 0, R = lists.length) {
-  if (L === R) return lists[L] || null;
+var mergeKLists = function (lists, L = 0, R = lists.length - 1) {
+  if (L >= R) return lists[L] || null;
   const mid = (L + R) >>> 1;
   return mergeTwoList(
     mergeKLists(lists, L, mid),
@@ -81,12 +85,15 @@ var mergeKLists = function (lists, L = 0, R = lists.length) {
 };
 
 function mergeTwoList(list1, list2) {
-  if (!list1 || !list2) return list1 || list2;
-  if (list1.val <= list2.val) {
-    list1.next = mergeTwoList(list1.next, list2);
-    return list1;
-  } else {
-    list2.next = mergeTwoList(list1, list2.next);
-    return list2;
+  let _head = (cur = new ListNode());
+  while (list1 && list2) {
+    if (list1.val <= list2.val) {
+      [cur.next, list1] = [list1, list1.next];
+    } else {
+      [cur.next, list2] = [list2, list2.next];
+    }
+    cur = cur.next;
   }
+  cur.next = list1 || list2;
+  return _head.next;
 }

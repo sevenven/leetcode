@@ -33,22 +33,22 @@ var threeSum = function (nums) {
  * @return {number[][]}
  */
 // 排序加hash表 时间复杂度O(n^2) 空间复杂度O(n)
-// a + b + c = 0 -> a + b = -c
+// a + b + c = 0 -> a + b = -c;
 var threeSum = function (nums) {
-  const result = [];
-  // 排序----改变了入参-实际写业务代码的时候一定要慎重
+  let result = [],
+    exits = {},
+    another;
   nums.sort((a, b) => a - b);
   for (let i = 0; i < nums.length - 1; i++) {
     if (nums[i] > 0) break;
     if (i > 0 && nums[i] === nums[i - 1]) continue;
-    const exits = {};
+    exits = {};
     for (let j = i + 1; j < nums.length; j++) {
-      const another = -nums[i] - nums[j];
-      if (exits[another] !== undefined) {
+      another = -nums[i] - nums[j];
+      if (exits[another] !== undefined)
         result.push([nums[i], another, nums[j]]);
-        while (nums[j + 1] === nums[j]) j++;
-      }
       exits[nums[j]] = j;
+      while (nums[j + 1] === nums[j]) j++;
     }
   }
   return result;
@@ -60,25 +60,28 @@ var threeSum = function (nums) {
  */
 // 排序加双指针 时间复杂度O(n^2) 空间复杂度O(1)----看着时间复杂度一样-->其实这个跑的比hash表那个快
 var threeSum = function (nums) {
-  const result = [];
+  let result = [],
+    L,
+    R,
+    sum;
   // 排序----改变了入参-实际写业务代码的时候一定要慎重
   nums.sort((a, b) => a - b);
-  for (let i = 0; i < nums.length; i++) {
+  for (let i = 0; i < nums.length - 1; i++) {
     if (nums[i] > 0) break;
     if (i > 0 && nums[i] === nums[i - 1]) continue;
-    let L = i + 1,
-      R = nums.length - 1;
+    L = i + 1;
+    R = nums.length;
     while (L < R) {
-      let sum = nums[i] + nums[L] + nums[R];
+      sum = nums[i] + nums[L] + nums[R];
       if (sum === 0) {
         result.push([nums[i], nums[L], nums[R]]);
-        while (L < R && nums[L + 1] === nums[L]) L++;
-        while (L < R && nums[R - 1] === nums[R]) R--;
+        while (nums[L + 1] === nums[L]) L++;
+        while (nums[R - 1] === nums[R]) R--;
         L++;
         R--;
       } else if (sum < 0) {
         L++;
-      } else if (sum > 0) {
+      } else {
         R--;
       }
     }

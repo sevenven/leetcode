@@ -9,4 +9,32 @@
  * @param {string} s
  * @return {string}
  */
-var decodeString = function (s) {};
+var decodeString = function (s) {
+  const stack = [];
+  for (const char of s) {
+    if (char !== "]") {
+      stack.push(char);
+      continue;
+    }
+    let str = "";
+    while (stack.top() !== "[") {
+      str = stack.pop() + str;
+    }
+    stack.pop();
+    let num = "";
+    while (!Number.isNaN(Number(stack.top()))) {
+      num = stack.pop() + num;
+    }
+    stack.push(str.repeat(Number(num)));
+  }
+  return stack.join("");
+};
+
+Array.prototype.top = function () {
+  return this[this.length - 1];
+};
+
+console.log(decodeString("3[ab]12[bc]")); // "abababbcbcbcbcbcbcbcbcbcbcbcbc"
+console.log(decodeString("3[a2[c]]")); // "accaccacc"
+console.log(decodeString("2[abc]3[cd]ef")); // abcabccdcdcdef
+console.log(decodeString("abc3[cd]xyz")); // abccdcdcdxyz

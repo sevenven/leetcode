@@ -25,9 +25,10 @@ var twoSum = function (nums, target) {
 // 使用对象实现快速查找 时间复杂度O(n) 空间复杂度O(n)
 var twoSum = function (nums, target) {
   const exits = {};
+  let another;
   for (let i = 0; i < nums.length; i++) exits[nums[i]] = i;
   for (let j = 0; j < nums.length; j++) {
-    const another = target - nums[j];
+    another = target - nums[j];
     if (exits[another] !== undefined && exits[another] !== j)
       return [j, exits[another]];
   }
@@ -40,9 +41,10 @@ var twoSum = function (nums, target) {
  */
 // 使用对象实现快速查找 时间复杂度O(n) 空间复杂度O(n) --> 代码优化
 var twoSum = function (nums, target) {
-  const exits = {};
+  let exits = {},
+    another;
   for (let i = 0; i < nums.length; i++) {
-    const another = target - nums[i];
+    another = target - nums[i];
     if (exits[another] !== undefined) return [exits[another], i];
     exits[nums[i]] = i;
   }

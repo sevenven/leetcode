@@ -8,15 +8,16 @@
  */
 // 暴力破解 时间复杂度O(n^2) 空间复杂度O(1)
 var largestRectangleArea = function (heights) {
-  var maxarea = 0;
+  let maxArea = 0,
+    minHeight;
   for (let i = 0; i < heights.length; i++) {
-    let minHeight = heights[i];
+    minHeight = heights[i];
     for (let j = i; j < heights.length; j++) {
       minHeight = Math.min(minHeight, heights[j]);
-      maxarea = Math.max(maxarea, (j - i + 1) * minHeight);
+      maxArea = Math.max(maxArea, (j - i + 1) * minHeight);
     }
   }
-  return maxarea;
+  return maxArea;
 };
 
 /**
@@ -27,20 +28,20 @@ var largestRectangleArea = function (heights) {
 // 时间复杂度O(n) 空间复杂度O(n)
 var largestRectangleArea = function (heights) {
   let stack = [-1],
-    maxarea = 0;
+    maxArea = 0;
   for (let i = 0; i < heights.length; i++) {
     while (stack.top() !== -1 && heights[i] < heights[stack.top()]) {
-      maxarea = Math.max(maxarea, heights[stack.pop()] * (i - 1 - stack.top()));
+      maxArea = Math.max(maxArea, heights[stack.pop()] * (i - 1 - stack.top()));
     }
     stack.push(i);
   }
   while (stack.top() !== -1) {
-    maxarea = Math.max(
-      maxarea,
+    maxArea = Math.max(
+      maxArea,
       heights[stack.pop()] * (heights.length - 1 - stack.top())
     );
   }
-  return maxarea;
+  return maxArea;
 };
 
 Array.prototype.top = function () {

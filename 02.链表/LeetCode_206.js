@@ -6,19 +6,16 @@
 //   this.next = next || null;
 // }
 
-// LeetCode速度：1.指向前一个节点 2.递归 3.头插法
-
 /**
  * @param {ListNode} head
  * @return {ListNode}
  */
 // 递归反转链表 时间复杂度O(n) 空间复杂度O(n)
 var reverseList = function (head) {
-  if (!head || !head.next) return head;
-  var p = reverseList(head.next);
-  head.next.next = head;
-  head.next = null;
-  return p;
+  if (!head?.next) return head;
+  const _head = reverseList(head.next);
+  [head.next.next, head.next] = [head, null];
+  return _head;
 };
 
 /**

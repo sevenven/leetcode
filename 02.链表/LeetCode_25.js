@@ -15,18 +15,19 @@
  */
 // 非递归解法 时间复杂度O(n) 空间复杂度O(1)
 var reverseKGroup = function (head, k) {
-  let prev = (end = _head = new ListNode(null, head));
+  let _head = (prev = end = new ListNode(null, head)),
+    start,
+    _next;
   while (end) {
     for (let i = 0; i < k && end; i++) end = end.next;
     if (!end) break;
-    let first = prev.next;
-    let second = end.next;
+    [start, _next] = [prev.next, end.next];
     end.next = null;
-    [prev.next, first.next, prev, end] = [
-      reverseList(first),
-      second,
-      first,
-      first,
+    [prev.next, start.next, prev, end] = [
+      reverseList(start),
+      _next,
+      start,
+      start,
     ];
   }
   return _head.next;

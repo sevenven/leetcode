@@ -10,7 +10,7 @@
 // 暴力解法
 // 时间复杂度O(n^2) 空间复杂度O(1)
 var productExceptSelf = function (nums) {
-  let answer = [];
+  const answer = [];
   for (let i = 0; i < nums.length; i++) {
     for (let j = 0; j < nums.length; j++) {
       if (j === i) continue;
@@ -27,7 +27,7 @@ var productExceptSelf = function (nums) {
 // 左侧乘积*右侧乘积
 // 时间复杂度O(n) 空间复杂度O(n)
 var productExceptSelf = function (nums) {
-  let left = [],
+  const left = [],
     right = [],
     answer = [];
   left[0] = 1;
@@ -63,5 +63,5 @@ var productExceptSelf = function (nums) {
   return answer;
 };
 
-console.log(productExceptSelf([1, 2, 3, 4]));
-console.log(productExceptSelf([-1, 1, 0, -3, 3]));
+console.log(productExceptSelf([1, 2, 3, 4])); // [ 24, 12, 8, 6 ]
+console.log(productExceptSelf([-1, 1, 0, -3, 3])); // [ -0, 0, 9, -0, 0 ]

@@ -31,7 +31,7 @@ var hasCycle = function (head) {
 // 快慢指针法 时间复杂度O(n) 空间复杂度O(1)
 var hasCycle = function (head) {
   let slow = (fast = head);
-  while (fast && fast.next) {
+  while (fast?.next) {
     fast = fast.next.next;
     slow = slow.next;
     if (fast === slow) return true;

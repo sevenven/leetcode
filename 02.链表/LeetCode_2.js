@@ -13,9 +13,32 @@
  * @param {ListNode} l2
  * @return {ListNode}
  */
+// 递归写法
+// 时间复杂度O(n)|空间复杂度O(n) 输出空间O(n) 栈帧空间O(n)
 var addTwoNumbers = function (l1, l2, rest = 0) {
   if (!l1 && !l2 && !rest) return null;
-  const newVal = (l1?.val || 0) + (l2?.val || 0) + rest;
-  const nextNode = addTwoNumbers(l1?.next, l2?.next, Math.floor(newVal / 10));
-  return new ListNode(newVal % 10, nextNode);
+  const sum = (l1?.val || 0) + (l2?.val || 0) + rest;
+  return new ListNode(
+    sum % 10,
+    addTwoNumbers(l1?.next, l2?.next, Math.floor(sum / 10))
+  );
+};
+
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+// 非递归写法
+// 时间复杂度O(n)|空间复杂度O(n) 输出空间O(n) 暂存数据O(1)
+var addTwoNumbers = function (l1, l2) {
+  let _head = (cur = new ListNode()),
+    sum,
+    rest = 0;
+  while (l1 || l2 || rest) {
+    sum = (l1?.val || 0) + (l2?.val || 0) + rest;
+    cur.next = new ListNode(sum % 10);
+    [rest, cur, l1, l2] = [Math.floor(sum / 10), cur.next, l1?.next, l2?.next];
+  }
+  return _head.next;
 };

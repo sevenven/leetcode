@@ -9,13 +9,9 @@
 // 哈希表---解法简单易想，空间复杂度不符合题目要求-but能通过leetcode测试用例呢hhh~
 // 时间复杂度O(n) 空间复杂度O(n)
 var firstMissingPositive = function (nums) {
-  var exits = {};
-  for (let i = 0; i < nums.length; i++) {
-    exits[nums[i]] = true;
-  }
-  for (let i = 1; i <= nums.length; i++) {
-    if (!exits[i]) return i;
-  }
+  const exits = {};
+  for (num of nums) exits[num] = true;
+  for (let i = 1; i <= nums.length; i++) if (!exits[i]) return i;
   return nums.length + 1;
 };
 
@@ -26,9 +22,10 @@ var firstMissingPositive = function (nums) {
 // 将num放到对应的数组索引中
 // 时间复杂度O(n) 空间复杂度O(1)
 var firstMissingPositive = function (nums) {
-  let i = 0;
+  let i = 0,
+    correctIndex;
   while (i < nums.length) {
-    let correctIndex = nums[i] - 1;
+    correctIndex = nums[i] - 1;
     if (
       nums[i] > 0 &&
       nums[i] <= nums.length &&
