@@ -6,11 +6,24 @@
  * @return {number[]}
  */
 var dailyTemperatures = function (temperatures) {
-  const stack = [];
-  for (t of temperatures) {
+  const stack = [],
+    answer = [];
+  for (let i = 0; i < temperatures.length; i++) {
+    while (stack.length && temperatures[i] > temperatures[stack.top()]) {
+      const cur = stack.pop();
+      answer[cur] = i - cur;
+    }
+    stack.push(i);
   }
+  while (stack.length) {
+    answer[stack.pop()] = 0;
+  }
+  return answer;
 };
 
+Array.prototype.top = function () {
+  return this[this.length - 1];
+};
 console.log(dailyTemperatures([73, 74, 75, 71, 69, 72, 76, 73])); // [1, 1, 4, 2, 1, 1, 0, 0]
 console.log(dailyTemperatures([30, 40, 50, 60])); // [1, 1, 1, 0];
 console.log(dailyTemperatures([30, 60, 90])); // [1, 1, 0];
