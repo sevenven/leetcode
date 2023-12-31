@@ -78,12 +78,12 @@ var trap = function (height) {
   let stack = [],
     ans = 0;
   for (let i = 0; i < height.length; i++) {
-    while (stack.length > 0 && height[i] > height[stack.top()]) {
+    while (stack.length && height[i] > height[stack.top()]) {
       let cur = stack.pop();
       if (stack.length === 0) break;
-      ans +=
-        (i - stack.top() - 1) *
-        (Math.min(height[stack.top()], height[i]) - height[cur]);
+      let width = i - stack.top() - 1,
+        minHeight = Math.min(height[i], height[stack.top()]) - height[cur];
+      ans += width * minHeight;
     }
     stack.push(i);
   }

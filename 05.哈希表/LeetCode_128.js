@@ -7,6 +7,25 @@
  * @param {number[]} nums
  * @return {number}
  */
-var longestConsecutive = function (nums) {};
+// 哈希表
+// 时间复杂度O(n) 空间复杂度O(1)
+var longestConsecutive = function (nums) {
+  if (nums.length === 0) return 0;
+  const map = new Map();
+  for (let num of nums) map.set(num, 1);
+  for (let i in nums) {
+    if (map.has(nums[i] - 1)) map.set(nums[i], 0);
+  }
+  let maxLen = 1,
+    seqCount;
+  for (let num of nums) {
+    if (map.get(num) === 1) {
+      seqCount = 1;
+      while (map.has(num + seqCount)) seqCount++;
+      maxLen = Math.max(maxLen, seqCount);
+    }
+  }
+  return maxLen;
+};
 
 console.log(longestConsecutive([0, 3, 7, 2, 5, 8, 4, 6, 0, 1]));

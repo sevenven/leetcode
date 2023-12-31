@@ -9,16 +9,17 @@
 // 暴力法
 // 时间复杂度O(n^2) 空间复杂度O(1)
 var majorityElement = function (nums) {
-	var majorityCount = Math.floor(nums.length / 2);
-	for (var i = 0; i < nums.length; i++) {
-		var count = 0;
-		for (var j = 0; j < nums.length; j++) {
-			if (nums[i] === nums[j]) {
-				count++;
-			}
-		}
-		if (count > majorityCount) return nums[i];
-	}
+  let majorityCount = nums.length >>> 1,
+    count = 0;
+  for (let i = 0; i < nums.length; i++) {
+    count = 0;
+    for (let j = 0; j < nums.length; j++) {
+      if (nums[i] === nums[j]) {
+        count++;
+      }
+    }
+    if (count > majorityCount) return nums[i];
+  }
 };
 
 /**
@@ -28,14 +29,12 @@ var majorityElement = function (nums) {
 // 哈希表
 // 时间复杂度O(n) 空间复杂度O(n)
 var majorityElement = function (nums) {
-	var count = {}, 
-		majorityCount = Math.floor(nums.length / 2);
-	for (num of nums) {
-		count[num] = count[num] ? ++count[num] : 1;
-	}
-	for (key in count) {
-		if (count[key] > majorityCount) return key * 1;
-	}
+  const count = {},
+    majority = nums.length >>> 1;
+  for (let num of nums) count[num] = count[num] ? ++count[num] : 1;
+  for (key in count) {
+    if (count[key] > majority) return key * 1;
+  }
 };
 
 /**
@@ -44,9 +43,9 @@ var majorityElement = function (nums) {
  */
 // 排序
 // 时间复杂度O(nlogn) 空间复杂度O(1)
-var majorityElement = function(nums) {
-	nums.sort(function (a, b) {return a - b;});
-	return nums[Math.floor(nums.length / 2)];
+var majorityElement = function (nums) {
+  nums.sort((a, b) => a - b);
+  return nums[nums.length >>> 1];
 };
 
 console.log(majorityElement([3, 2, 3])); // 3

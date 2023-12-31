@@ -6,26 +6,26 @@
 // 此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 k ，例如不会出现像 3a 或 2[4] 的输入。
 
 /**
- * @param {string} s
+ * @param {string} str
  * @return {string}
  */
-var decodeString = function (s) {
+var decodeString = function (str) {
   const stack = [];
-  for (const char of s) {
-    if (char !== "]") {
-      stack.push(char);
+  for (s of str) {
+    if (s !== "]") {
+      stack.push(s);
       continue;
     }
-    let str = "";
+    let subStr = "";
     while (stack.top() !== "[") {
-      str = stack.pop() + str;
+      subStr = stack.pop() + subStr;
     }
     stack.pop();
     let num = "";
-    while (!Number.isNaN(Number(stack.top()))) {
+    while (!isNaN(stack.top())) {
       num = stack.pop() + num;
     }
-    stack.push(str.repeat(Number(num)));
+    stack.push(subStr.repeat(num * 1));
   }
   return stack.join("");
 };
