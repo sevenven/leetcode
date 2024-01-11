@@ -15,7 +15,7 @@ function LinkList() {
 // 向链表节点末尾追加节点
 LinkList.prototype.append = function (val) {
   const node = new ListNode(val);
-  if (this.head === null) {
+  if (!this.head) {
     this.head = node;
     return;
   }
@@ -54,7 +54,7 @@ LinkList.prototype.findByIndex = function (index) {
 };
 
 // 查找前一个节点
-LinkList.prototype.findPrev = function (val) {
+LinkList.prototype.findpre = function (val) {
   let cur = this.head;
   while (cur.next && cur.next.val != val) cur = cur.next;
   return cur.next ? cur : null;
@@ -88,8 +88,8 @@ LinkList.prototype.remove = function (val) {
     this.head = this.head.next;
     return;
   }
-  let prev = this.findPrev(val);
-  if (prev && prev.next) prev.next = prev.next.next;
+  let pre = this.findpre(val);
+  if (pre && pre.next) pre.next = pre.next.next;
 };
 
 // 删除指定index的节点
@@ -98,8 +98,8 @@ LinkList.prototype.removeIndex = function (index) {
     this.head = this.head.next;
     return;
   }
-  const prev = this.findByIndex(index - 1);
-  if (prev && prev.next) prev.next = prev.next.next;
+  const pre = this.findByIndex(index - 1);
+  if (pre && pre.next) pre.next = pre.next.next;
 };
 
 // 删除倒数第n个节点---最后一个是倒数第一个
@@ -127,11 +127,11 @@ LinkList.prototype.print = function () {
 // 反转链表
 LinkList.prototype.reverseList = function () {
   let cur = this.head,
-    prev = null;
+    pre = null;
   while (cur) {
-    [cur.next, prev, cur] = [prev, cur, cur.next];
+    [cur.next, pre, cur] = [pre, cur, cur.next];
   }
-  return prev;
+  return pre;
 };
 
 // 检测链表是否是环形链表
@@ -164,7 +164,7 @@ list.insert("bobo", "xianxian");
 console.log(list.head);
 console.log(list.findByValue("wangji").val, list.findByValue("yun"));
 console.log(list.findByIndex(1).val, list.findByValue(5));
-console.log(list.findPrev("bobo").val);
+console.log(list.findpre("bobo").val);
 console.log(list.findMiddle().val);
 console.log(list.findIndexFromEnd(1).val);
 // console.log(list.remove('xianxian'), list.head)

@@ -38,13 +38,13 @@ var isPalindrome = function (head) {
   // 链表分成两部分
   while (fast?.next) [slow, fast] = [slow.next, fast.next.next];
   // 翻转后半部分链表
-  let prev = null,
+  let pre = null,
     cur = slow;
-  while (cur) [cur.next, prev, cur] = [prev, cur, cur.next];
+  while (cur) [cur.next, pre, cur] = [pre, cur, cur.next];
   // 对比
-  while (prev) {
-    if (head.val !== prev.val) return false;
-    else [head, prev] = [head.next, prev.next];
+  while (pre) {
+    if (head.val !== pre.val) return false;
+    else [head, pre] = [head.next, pre.next];
   }
   return true;
 };

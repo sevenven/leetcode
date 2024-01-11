@@ -7,18 +7,12 @@
  */
 // 递归
 // 时间复杂度O(n) 空间复杂度O(n)
-var levelOrder = function (root) {
-	var result = [];
-	order(0, root);
-	return result;
-	function order(level, root) {
-		if (!root) return;
-		if (result[level] === undefined) result[level] = [];
-		result[level].push(root.val);
-		for (child of root.children) {
-			order(level + 1, child)
-		}
-	}
+var levelOrder = function (root, level = 0, result = []) {
+  if (!root) return result;
+  if (!result[level]) result[level] = [];
+  result[level].push(root.val);
+  for (let child of root.children) levelOrder(child, level + 1, result);
+  return result;
 };
 
 /**
@@ -28,17 +22,16 @@ var levelOrder = function (root) {
 // 使用队列
 // 时间复杂度O(n) 空间复杂度O(n)
 var levelOrder = function (root) {
-	if (!root) return [];
-	var queue = [{ level: 0, node: root }],
-		result = [];
-	while (queue.length) {
-		var cur = queue.shift(),
-			level = cur.level;
-		if (!result[level])
-			result[level] = [];
-		result[level].push(cur.node.val);
-		for (child of cur.node.children)
-			queue.push({ level: level + 1, node: child });
-	}
-	return result;
+  if (!root) return [];
+  let queue = [{ node: root, level: 0 }],
+    result = [],
+    cur;
+  while (queue.length) {
+    cur = queue.shift();
+    if (!result[cur.level]) result[cur.level] = [];
+    result[cur.level].push(cur.node.val);
+    for (let child of cur.node.children)
+      queue.push({ node: child, level: cur.level + 1 });
+  }
+  return result;
 };

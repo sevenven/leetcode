@@ -7,16 +7,11 @@
  */
 // 递归遍历
 // 时间复杂度O(n) 空间复杂度O(logn)
-var preorder = function(root) {
-	var result = [];
-	order(root);
-	return result;
-	function order(root) {
-		if (!root) return;
-		result.push(root.val);
-		for (child of root.children) 
-			order(child);
-	}
+var preorder = function (root, result = []) {
+  if (!root) return result;
+  result.push(root.val);
+  for (let child of root.children) preorder(child, result);
+  return result;
 };
 
 /**
@@ -25,15 +20,17 @@ var preorder = function(root) {
  */
 // 使用栈
 // 时间复杂度O(n) 空间复杂度O(n)
-var preorder = function(root) {
-	if (!root) return [];
-	var stack = [root],
-			result = [];
-	while (stack.length) {
-		var cur = stack.pop();
-		result.push(cur.val);
-		for (var i = cur.children.length - 1; i >= 0; i--) 
-			stack.push(cur.children[i]);
-	}
-	return result;
+var preorder = function (root) {
+  if (!root) return [];
+  let stack = [root],
+    result = [],
+    cur;
+  while (stack.length) {
+    cur = stack.pop();
+    result.push(cur.val);
+    for (let i = cur.children.length - 1; i >= 0; i--) {
+      stack.push(cur.children[i]);
+    }
+  }
+  return result;
 };

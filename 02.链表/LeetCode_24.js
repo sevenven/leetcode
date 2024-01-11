@@ -26,12 +26,12 @@ var swapPairs = function (head) {
  */
 // 非递归解法 时间复杂度O(n) 空间复杂度O(1)
 var swapPairs = function (head) {
-  let _head = (prev = new ListNode(null, head)),
+  let _head = (pre = new ListNode(null, head)),
     first,
     second;
-  while (prev?.next?.next) {
-    [first, second] = [prev.next, prev.next.next];
-    [prev.next, second.next, first.next, prev] = [
+  while (pre?.next?.next) {
+    [first, second] = [pre.next, pre.next.next];
+    [pre.next, second.next, first.next, pre] = [
       second,
       first,
       second.next,

@@ -1,5 +1,5 @@
 // https://leetcode.cn/problems/binary-tree-postorder-traversal/
-// 给你一棵二叉树的根节点 root ，返回其节点值的 后序遍历 
+// 给你一棵二叉树的根节点 root ，返回其节点值的 后序遍历
 
 /**
  * @param {TreeNode} root
@@ -7,16 +7,12 @@
  */
 // 递归遍历
 // 时间复杂度O(n) 空间复杂度O(logn)
-var postorderTraversal = function (root) {
-  var result = [];
-  traversal(root);
+var postorderTraversal = function (root, result = []) {
+  if (!root) return result;
+  postorderTraversal(root.left, result);
+  postorderTraversal(root.right, result);
+  result.push(root.val);
   return result;
-  function traversal(root) {
-    if (!root) return;
-    traversal(root.left);
-    traversal(root.right);
-    result.push(root.val);
-  }
 };
 
 /**
@@ -26,8 +22,7 @@ var postorderTraversal = function (root) {
 // 基于栈遍历
 // 时间复杂度O(n) 空间复杂度O(n)
 var postorderTraversal = function (root) {
-  var cur = root,
-    predecessor = null,
+  let cur = root,
     stack = [],
     result = [];
   while (cur || stack.length) {
@@ -36,9 +31,8 @@ var postorderTraversal = function (root) {
       cur = cur.left;
     }
     cur = stack.pop();
-    if (!cur.right || cur.right === predecessor) {
+    if (!cur.right || cur.right.val === result[result.length - 1]) {
       result.push(cur.val);
-      predecessor = cur;
       cur = null;
     } else {
       stack.push(cur);
@@ -78,11 +72,9 @@ SearchTree.prototype.insert = function (val) {
     return;
   }
   var curNode = this._getTreeNode(val);
-  if (val < curNode.val)
-    curNode.left = node;
-  else
-    curNode.right = node;
-}
+  if (val < curNode.val) curNode.left = node;
+  else curNode.right = node;
+};
 
 // 在树中遍历查找可以添加val的节点
 SearchTree.prototype._getTreeNode = function (val) {
@@ -98,7 +90,7 @@ SearchTree.prototype._getTreeNode = function (val) {
     }
   }
   return curNode;
-}
+};
 
 var searchTree = new SearchTree();
 searchTree.insert(2);

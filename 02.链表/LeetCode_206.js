@@ -24,12 +24,12 @@ var reverseList = function (head) {
  */
 // 将每个节点的next指向前一个节点 时间复杂度O(n) 空间复杂度O(1)
 var reverseList = function (head) {
-  let prev = null,
+  let pre = null,
     cur = head;
   while (cur) {
-    [cur.next, prev, cur] = [prev, cur, cur.next];
+    [cur.next, pre, cur] = [pre, cur, cur.next];
   }
-  return prev;
+  return pre;
 };
 
 /**

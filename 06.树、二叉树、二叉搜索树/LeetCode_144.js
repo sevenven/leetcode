@@ -7,16 +7,12 @@
  */
 // 递归遍历
 // 时间复杂度O(n) 空间复杂度O(logn)
-var preorderTraversal = function (root) {
-  var result = [];
-  traversal(root);
+var preorderTraversal = function (root, result = []) {
+  if (!root) return result;
+  result.push(root.val);
+  preorderTraversal(root.left, result);
+  preorderTraversal(root.right, result);
   return result;
-  function traversal(root) {
-    if (!root) return;
-    result.push(root.val);
-    traversal(root.left);
-    traversal(root.right);
-  }
 };
 
 /**
@@ -26,14 +22,15 @@ var preorderTraversal = function (root) {
 // 使用栈
 // 时间复杂度O(n) 空间复杂度O(n)
 var preorderTraversal = function (root) {
-  if (!root) return;
-  var stack = [root],
-    result = [];
+  if (!root) return [];
+  let stack = [root],
+    result = [],
+    cur;
   while (stack.length) {
-    var cur = stack.pop();
+    cur = stack.pop();
     result.push(cur.val);
-    if (cur.right) stack.push(cur.right);
-    if (cur.left) stack.push(cur.left);
+    cur.right && stack.push(cur.right);
+    cur.left && stack.push(cur.left);
   }
   return result;
 };
@@ -45,21 +42,18 @@ var preorderTraversal = function (root) {
 // 莫里斯遍历
 // 时间复杂度O(n) 空间复杂度O(1)
 var preorderTraversal = function (root) {
-  var cur = root,
-    predecessor = null,
+  let cur = root,
+    pre,
     result = [];
   while (cur) {
     if (cur.left) {
-      predecessor = cur.left;
-      while (predecessor.right && predecessor.right !== cur)
-        predecessor = predecessor.right;
-      if (!predecessor.right) {
+      pre = cur.left;
+      while (pre.right && pre.right !== cur) pre = pre.right;
+      if (!pre.right) {
         result.push(cur.val);
-        predecessor.right = cur;
-        cur = cur.left;
+        [pre.right, cur] = [cur, cur.left];
       } else {
-        predecessor.right = null;
-        cur = cur.right;
+        [pre.right, cur] = [null, cur.right];
       }
     } else {
       result.push(cur.val);

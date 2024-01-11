@@ -32,7 +32,7 @@ LinkList.prototype.findByValue = function () {};
 LinkList.prototype.findByIndex = function () {};
 
 // 查找前一个节点
-LinkList.prototype.findPrev = function () {};
+LinkList.prototype.findpre = function () {};
 
 // 查找中间节点
 LinkList.prototype.findMiddleNode = function () {};
