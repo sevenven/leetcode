@@ -6,36 +6,27 @@
  * @param {number[]} nums
  * @return {number[][]}
  */
-// 分治法
-var subsets = function (nums) {
-	var result = [];
-	sub([], nums, 0);
-	return result;
-	function sub(arr, nums, index) {
-		if (nums.length === index) {
-			result.push(arr);
-			return;
-		}
-		sub(arr, nums, index + 1);
-		sub(arr.concat(nums[index]), nums, index + 1);
-	}
+// 回溯1
+var subsets = function (nums, level = 0, arr = [], result = []) {
+  if (level === nums.length) {
+    result.push(arr);
+    return;
+  }
+  subsets(nums, level + 1, arr, result);
+  subsets(nums, level + 1, arr.concat(nums[level]), result);
+  return result;
 };
 
 /**
  * @param {number[]} nums
  * @return {number[][]}
  */
-// 回溯法
-var subsets = function (nums) {
-	var result = [];
-	sub([], nums);
-	return result;
-	function sub(arr, nums) {
-		result.push(arr);
-		for (var i = 0; i < nums.length; i++) {
-			sub(arr.concat(nums[i]), nums.slice(i + 1));
-		}
-	}
+// 回溯2
+var subsets = function (nums, arr = [], result = []) {
+  result.push(arr);
+  for (let i = 0; i < nums.length; i++)
+    subsets(nums.slice(i + 1), arr.concat(nums[i]), result);
+  return result;
 };
 
-console.log(subsets([1, 2, 3])) // [[], [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3]]
+console.log(subsets([1, 2, 3])); // [[], [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3]]

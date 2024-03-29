@@ -56,20 +56,11 @@ BinarySearchTree.prototype.delete = function (num) {
 };
 
 // 中序遍历
-BinarySearchTree.prototype.inorderTraversal = function (root) {
-  if (!root) return [];
-  let stack = [],
-    result = [],
-    cur = root;
-  while (cur || stack.length) {
-    while (cur) {
-      stack.push(cur);
-      cur = cur.left;
-    }
-    cur = stack.pop();
-    result.push(cr.val);
-    cur = cur.right;
-  }
+BinarySearchTree.prototype.inorderTraversal = function (root, result) {
+  if (!root) return result;
+  inorderTraversal(root.left, result);
+  result.push(root.val);
+  inorderTraversal(root.right, result);
   return result;
 };
 

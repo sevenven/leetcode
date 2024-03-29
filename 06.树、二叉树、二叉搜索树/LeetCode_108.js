@@ -7,15 +7,11 @@
  * @param {number[]} nums
  * @return {TreeNode}
  */
-var sortedArrayToBST = function (nums) {
-  return buildBST(nums, 0, nums.length - 1);
-};
-
-function buildBST(nums, begin, end) {
-  if (begin > end) return null;
-  const mid = (begin + end) >>> 1,
+var sortedArrayToBST = function (nums, L = 0, R = nums.length - 1) {
+  if (L > R) return null;
+  const mid = (L + R) >>> 1,
     root = new TreeNode(nums[mid]);
-  root.left = buildBST(nums, begin, mid - 1);
-  root.right = buildBST(nums, mid + 1, end);
+  root.left = sortedArrayToBST(nums, L, mid - 1);
+  root.right = sortedArrayToBST(nums, mid + 1, R);
   return root;
-}
+};

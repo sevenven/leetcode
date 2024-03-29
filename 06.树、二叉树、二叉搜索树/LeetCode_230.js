@@ -7,4 +7,35 @@
  * @param {number} k
  * @return {number}
  */
-var kthSmallest = function (root, k) {};
+/**
+ * @param {TreeNode} root
+ * @param {number} k
+ * @return {number}
+ */
+var kthSmallest = function (root, k, result = []) {
+  if (!root) return;
+  kthSmallest(root.left, k, result);
+  result.push(root.val);
+  kthSmallest(root.right, k, result);
+  return result[k - 1];
+};
+
+/**
+ * @param {TreeNode} root
+ * @param {number} k
+ * @return {number}
+ */
+var kthSmallest = function (root, k) {
+  let stack = [],
+    count = 0,
+    cur = root;
+  while (cur || stack.length) {
+    while (cur) {
+      stack.push(cur);
+      cur = cur.left;
+    }
+    cur = stack.pop();
+    if (k === ++count) return cur.val;
+    cur = cur.right;
+  }
+};

@@ -8,4 +8,15 @@
  * @param {TreeNode} root
  * @return {number}
  */
-var diameterOfBinaryTree = function (root) {};
+var diameterOfBinaryTree = function (root) {
+  let diamerter = 0;
+  traversal(root);
+  return diamerter;
+  function traversal(root) {
+    if (!root) return 0;
+    const left = traversal(root.left);
+    const right = traversal(root.right);
+    diamerter = Math.max(diamerter, left + right);
+    return 1 + Math.max(left, right);
+  }
+};

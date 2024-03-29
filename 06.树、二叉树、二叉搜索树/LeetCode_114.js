@@ -9,6 +9,7 @@
  * @param {TreeNode} root
  * @return {void} Do not return anything, modify root in-place instead.
  */
+// 右->左->根遍历 再往前指
 var flatten = function (root) {
   let pre = null;
   root && revPreOrder(root);

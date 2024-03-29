@@ -133,15 +133,16 @@ console.log(arr, "--quickSort");
 // 先排序左右子数组 然后合并两个有序数组
 // 非原地排序 稳定排序
 function mergeSort(arr, begin, end) {
-  if (begin >= end) return;
-  var mid = (begin + end) >> 1;
-  mergeSort(arr, begin, mid);
-  mergeSort(arr, mid + 1, end);
+  if (begin >= end) return; // 递归返回条件
+  let mid = (begin + end) >> 1;
+  mergeSort(arr, begin, mid); // 分
+  mergeSort(arr, mid + 1, end); // 分
+
   merge(arr, begin, mid, end);
 }
 
 function merge(arr, begin, mid, end) {
-  var tmp = [],
+  let tmp = [],
     i = begin,
     j = mid + 1;
   k = 0;
@@ -149,10 +150,10 @@ function merge(arr, begin, mid, end) {
     tmp[k++] = arr[i] <= arr[j] ? arr[i++] : arr[j++];
   while (i <= mid) tmp[k++] = arr[i++];
   while (j <= end) tmp[k++] = arr[j++];
-  for (var p = 0; p < tmp.length; p++) arr[begin + p] = tmp[p];
+  for (let p = 0; p < tmp.length; p++) arr[begin + p] = tmp[p];
 }
 
-var arr = [3, 44, 38, 5, 15, 46, 50, 28, 26, 36, 19, 4, 2, 47, 27];
+let arr = [3, 44, 38, 5, 15, 46, 50, 28, 26, 36, 19, 4, 2, 47, 27];
 mergeSort(arr, 0, arr.length - 1);
 console.log(arr, "--mergeSort");
 

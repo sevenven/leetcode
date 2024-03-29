@@ -6,21 +6,17 @@
  * @return {number[][]}
  */
 // 回溯解法
-var permute = function (nums) {
-	var result = [];
-	rPermute([], nums, nums.length);
-	return result;
-	function rPermute (arr, nums, len) {
-		if (arr.length === len) {
-			result.push(arr);
-			return;
-		}
-		for (var i = 0; i < nums.length; i++) {
-			rPermute(arr.concat([nums[i]]), nums.slice(0, i).concat(nums.slice(i + 1)), len);
-		}
-	}
+var permute = function (nums, len = nums.length, arr = [], result = []) {
+  if (arr.length === len) result.push(arr);
+  for (let i = 0; i < nums.length; i++) {
+    permute(
+      nums.slice(0, i).concat(nums.slice(i + 1)),
+      len,
+      arr.concat(nums[i]),
+      result
+    );
+  }
+  return result;
 };
 
 console.log(permute([1, 2, 3])); // [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]
-
-

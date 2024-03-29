@@ -7,17 +7,10 @@
  */
 // 回溯解法
 var generateParenthesis = function (n) {
-	var result = [];
-	generate(0, 0, '', n);
-	return result;
-	function generate (left, right, str, n) {
-		if (left === n && right === n) {
-			result.push(str);
-			return;
-		}
-		if (left < n) generate(left + 1, right, str + '(', n);
-		if (right < left) generate(left, right + 1, str + ')', n);
-	}
+  if (left === n && right === n) result.push(str);
+  if (left < n) generateParenthesis(n, str + "(", left + 1, right, result);
+  if (right < left) generateParenthesis(n, str + ")", left, right + 1, result);
+  return result;
 };
 
 var result = generateParenthesis(3);

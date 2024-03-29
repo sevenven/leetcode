@@ -6,23 +6,21 @@
  * @return {number[][]}
  */
 // 回溯+剪枝解法
-var permuteUnique = function (nums) {
-	var result = [];
-	rPermuteUnique([], nums, nums.length);
-	return result;
-	function rPermuteUnique (arr, nums, len) {
-		if (arr.length === len) {
-			result.push(arr);
-			return;
-		}
-		var used = {};
-		for (var i = 0; i < nums.length; i++) {
-			if (!used[nums[i]]) {
-				used[nums[i]] = true;
-				rPermuteUnique(arr.concat([nums[i]]), nums.slice(0, i).concat(nums.slice(i+1)), len);
-			}
-		}
-	}
+var permuteUnique = function (nums, len = nums.length, arr = [], result = []) {
+  if (arr.length === len) result.push(arr);
+  const used = {};
+  for (let i = 0; i < nums.length; i++) {
+    if (!used[nums[i]]) {
+      used[nums[i]] = true;
+      permuteUnique(
+        nums.slice(0, i).concat(nums.slice(i + 1)),
+        len,
+        arr.concat(nums[i]),
+        result
+      );
+    }
+  }
+  return result;
 };
 
-console.log(permuteUnique([3, 3, 0, 3])) // [[3, 3, 0, 3], [3, 3, 3, 0], [3, 0, 3, 3], [0, 3, 3, 3]]
+console.log(permuteUnique([3, 3, 0, 3])); // [[3, 3, 0, 3], [3, 3, 3, 0], [3, 0, 3, 3], [0, 3, 3, 3]]

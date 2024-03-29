@@ -6,52 +6,23 @@
  * @param {number} n
  * @return {number}
  */
-// 写法一
-var totalNQueens = function(n) {
-  var count = 0;
-  placeQueues({}, {}, {}, 0, n);
-  return count;
-  function placeQueues (col, pie, na, row, n) {
-    if (row === n) {
-      count++;
-      return;
-    }
-    for (var i = 0; i < n; i++) {
-      if (!col[i] && !pie[row+i] && !na[row-i]) {
-        col[i] = true;
-        pie[row+i] = true;
-        na[row-i] = true;
-        placeQueues(col, pie, na, row + 1, n);
-        delete col[i];
-        delete pie[row+i];
-        delete na[row-i];
-      }
+// 回溯+剪枝
+var totalNQueens = function (n, curRow = 0, solution = []) {
+  if (curRow === n) return 1;
+  let total = 0;
+  for (let i = 0; i < n; i++) {
+    if (
+      !solution.some(
+        (col, row) =>
+          i === col || curRow - i === row - col || curRow + i === row + col
+      )
+    ) {
+      solution.push(i);
+      total += totalNQueens(n, curRow + 1, solution, total);
+      solution.pop();
     }
   }
-};
-
-/**
- * @param {number} n
- * @return {number}
- */
-// 写法二
-var totalNQueens = function(n) {
-  var count = 0;
-  placeQueues([], 0, n);
-  return count;
-  function placeQueues (state, row, n) {
-    if (row === n) {
-      count++;
-      return;
-    }
-    for (var i = 0; i < n; i++) {
-      if (!state.some((col, s_row) => i === col || (row - i) === (s_row - col) || (row + i) === (s_row + col))) {
-        state.push(i);
-        placeQueues(state, row + 1, n);
-        state.pop();
-      }
-    }
-  }
+  return total;
 };
 
 console.log(totalNQueens(1)); // 1

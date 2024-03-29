@@ -5,22 +5,18 @@
 // 给你一个二叉树的根节点 root ，返回其 最大路径和 。
 
 /**
- * @param {TreeNode} root
+ * @param {Treeroot} root
  * @return {number}
  */
 var maxPathSum = function (root) {
-  let max = -Infinity;
-  findSums(root);
+  var max = -Number.MAX_VALUE;
+  getMaxSum(root);
   return max;
-
-  function findSums(root) {
+  function getMaxSum(root) {
     if (!root) return 0;
-    let left = findSums(root.left),
-      right = findSums(root.right),
-      allSum = left + right + root.val,
-      leftNodeSum = left + root.val,
-      rightNodeSum = right + root.val;
-    max = Math.max(max, root.val, allSum, leftNodeSum, rightNodeSum);
-    return Math.max(leftNodeSum, rightNodeSum, root.val);
+    var leftSum = getMaxSum(root.left);
+    var rightSum = getMaxSum(root.right);
+    max = Math.max(max, root.val + leftSum + rightSum);
+    return Math.max(0, root.val + leftSum, root.val + rightSum);
   }
 };

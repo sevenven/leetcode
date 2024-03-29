@@ -4,65 +4,63 @@
 // 给你一个整数 n ，返回所有不同的 n 皇后问题 的解决方案。
 // 每一种解法包含一个不同的 n 皇后问题 的棋子放置方案，该方案中 'Q' 和 '.' 分别代表了皇后和空位。
 
-// 回溯+剪枝
 /**
  * @param {number} n
  * @return {string[][]}
  */
-// 写法一
-var solveNQueens = function (n) {
-	var result = [];
-	placeQueens({}, {}, {}, 0, [], n);
-	return result;
-	// col/pie/na是之前皇后所能够攻击的位置
-	function placeQueens (col, pie, na, row, state, n) {
-		if (row === n) {
-			result.push(generate(state, n));
-		}
-		for (var i = 0; i < n; i++) { // 遍历的是列
-			if (!col[i] && !pie[row+i] && !na[row-i]) {
-				col[i] = true;
-				pie[row+i] = true;
-				na[row-i] = true;
-				state.push(i);
-				placeQueens(col, pie, na, row + 1, state, n);
-				delete col[i];
-				delete pie[row+i];
-				delete na[row-i];
-				state.pop();
-			}
-		}
-	}
-	function generate (state, n) {
-		var board = [];
-		for (i of state) {
-			board.push('.'.repeat(i) + 'Q' + '.'.repeat(n - i - 1));
-		}
-		return board;
-	}
+// 回溯+剪枝 写法一
+var solveNQueens = function (
+  n,
+  col = {},
+  pie = {},
+  na = {},
+  curRow = 0,
+  solution = [],
+  result = []
+) {
+  if (curRow === n)
+    result.push(
+      solution.map((col) => ".".repeat(col) + "Q" + ".".repeat(n - 1 - col))
+    );
+  for (let i = 0; i < n; i++) {
+    if (!col[i] && !pie[curRow + i] && !na[curRow - i]) {
+      col[i] = true;
+      solution.push(i);
+      pie[curRow + i] = true;
+      na[curRow - i] = true;
+      solveNQueens(n, col, pie, na, curRow + 1, solution, result);
+      solution.pop();
+      col[i] = false;
+      pie[curRow + i] = false;
+      na[curRow - i] = false;
+    }
+  }
+  return result;
 };
 
 /**
  * @param {number} n
  * @return {string[][]}
  */
-// 写法二
-var solveNQueens = function (n) {
-	var result = [];
-	placeQueens([], 0, n);
-	return result;
-	function placeQueens (state, row, n) {
-		if (row === n) {
-			result.push(state.map(col => '.'.repeat(col) + 'Q' + '.'.repeat(n - col - 1)));
-		}
-		for (var i = 0; i < n; i++) {
-			if (!state.some((col, s_row) => i === col || (row + i) === (s_row + col) || (row - i) === (s_row - col))) {
-				state.push(i);
-				placeQueens(state, row + 1, n);
-				state.pop();
-			}
-		}
-	}
+// 回溯+剪枝 写法二
+var solveNQueens = function (n, curRow = 0, solution = [], result = []) {
+  if (curRow === n)
+    result.push(
+      solution.map((col) => ".".repeat(col) + "Q" + ".".repeat(n - 1 - col))
+    );
+  for (let i = 0; i < n; i++) {
+    if (
+      !solution.some(
+        (col, row) =>
+          i === col || curRow + i === row + col || curRow - i === row - col
+      )
+    ) {
+      solution.push(i);
+      solveNQueens(n, curRow + 1, solution, result);
+      solution.pop();
+    }
+  }
+  return result;
 };
 
 console.log(solveNQueens(4)); // [['.Q..', '...Q', 'Q...', '..Q.'], ['..Q.', 'Q...', '...Q', '.Q..']]

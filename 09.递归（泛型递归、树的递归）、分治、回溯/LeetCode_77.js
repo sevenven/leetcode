@@ -8,19 +8,14 @@
  * @return {number[][]}
  */
 // 回溯 + 剪枝解法
-var combine = function (n, k) {
-	var result = [];
-	rcombine([], 1, n, k);
-	return result;
-	function rcombine(arr, begin, n, k) {
-		if (arr.length === k) {
-			result.push(arr);
-			return;
-		}
-		for (var i = begin; i <= n - k + 1 + arr.length; i++) { // (n - k + 1 + arr.length)后面的数字是凑不够k个数量组合的，剪掉不用进入回溯了
-			rcombine(arr.concat(i), i + 1, n, k);
-		}
-	}
+var combine = function (n, k, begin = 1, arr = [], result = []) {
+  if (arr.length === k) {
+    result.push(arr);
+    return;
+  }
+  for (let i = begin; i <= n - (k - arr.length) + 1; i++)
+    combine(n, k, i + 1, arr.concat(i), result);
+  return result;
 };
 
 console.log(combine(4, 1)); // [[1], [2], [3], [4]]

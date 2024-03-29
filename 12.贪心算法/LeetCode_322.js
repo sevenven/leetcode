@@ -9,19 +9,19 @@
  * @return {number}
  */
 var coinChange = function (coins, amount) {
-	return change(coins, amount, []);
-	function change(coins, amount, caches) {
-		if (amount === 0) return 0;
-		if (caches[amount]) return caches[amount];
-		var count = Number.MAX_SAFE_INTEGER;
-		for (coin of coins) {
-			if (coin > amount) continue;
-			var sub = change(coins, amount - coin, caches);
-			if (sub === -1) continue;
-			count = Math.min(count, sub + 1);
-		}
-		return caches[amount] = count === Number.MAX_SAFE_INTEGER ? -1 : count;
-	}
+  return change(coins, amount, []);
+  function change(coins, amount, caches) {
+    if (amount === 0) return 0;
+    if (caches[amount]) return caches[amount];
+    var count = Number.MAX_SAFE_INTEGER;
+    for (coin of coins) {
+      if (coin > amount) continue;
+      var sub = change(coins, amount - coin, caches);
+      if (sub === -1) continue;
+      count = Math.min(count, sub + 1);
+    }
+    return (caches[amount] = count === Number.MAX_SAFE_INTEGER ? -1 : count);
+  }
 };
 console.log(coinChange([1, 2, 5], 11)); // 3
 console.log(coinChange([2, 2, 5], 11)); // 4

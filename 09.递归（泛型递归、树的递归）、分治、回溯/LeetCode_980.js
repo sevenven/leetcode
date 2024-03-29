@@ -11,4 +11,39 @@
  * @param {number[][]} grid
  * @return {number}
  */
-var uniquePathsIII = function (grid) {};
+var uniquePathsIII = function (grid) {
+  let startX,
+    startY,
+    count0 = 0;
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[0].length; j++) {
+      if (grid[i][j] === 0) {
+        count0++;
+      } else if (grid[i][j] === 1) {
+        startX = i;
+        startY = j;
+      }
+    }
+  }
+  return getPath(grid, startX, startY, count0 + 1);
+};
+
+function getPath(grid, x, y, left) {
+  if (
+    x < 0 ||
+    x >= grid.length ||
+    y < 0 ||
+    y >= grid[0].length ||
+    grid[x][y] === -1
+  )
+    return 0;
+  if (grid[x][y] === 2) return left === 0;
+  grid[x][y] = -1;
+  const reslut =
+    getPath(grid, x - 1, y, left - 1) +
+    getPath(grid, x + 1, y, left - 1) +
+    getPath(grid, x, y - 1, left - 1) +
+    getPath(grid, x, y + 1, left - 1);
+  grid[x][y] = 0;
+  return reslut;
+}

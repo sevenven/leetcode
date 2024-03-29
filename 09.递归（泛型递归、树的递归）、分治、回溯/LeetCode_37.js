@@ -11,31 +11,36 @@
  * @return {void} Do not return anything,   modify board in-place instead.
  */
 var solveSudoku = function (board) {
-  for (var i = 0; i < 9; i++) {
-    for (var j = 0; j < 9; j++) {
+  for (let i = 0; i < 9; i++) {
+    // 遍历行
+    for (let j = 0; j < 9; j++) {
+      // 遍历列
       if (board[i][j] !== ".") continue;
-      for (var k = 1; k <= 9; k++) {
-        if (isValid(board, i, j, k.toString())) {
-          board[i][j] = k.toString();
-          if (solveSudoku(board)) return true;
+      for (let k = 1; k <= 9; k++) {
+        if (isValid(board, i, j, k + "")) {
+          // i,j 的位置放 k + '' 是否合适
+          board[i][j] = k + "";
+          if (solveSudoku(board)) return true; // 期盼在某一个递归树的分支填满了 立即返回
           board[i][j] = ".";
         }
       }
-      return false;
+      return false; // 9个数都试过了不行 返回false 当前棋盘找不到解决数独问题的解
     }
   }
-  return true;
+  return true; // 棋盘填满了
 };
 
 function isValid(board, row, col, k) {
-  var boxX = Math.floor(row / 3) * 3;
-  var boxY = Math.floor(col / 3) * 3;
-  for (var i = 0; i < 9; i++) {
+  const startX = Math.floor(row / 3) * 3;
+  const startY = Math.floor(col / 3) * 3;
+  // 判断同行及同列是否有重复
+  for (let i = 0; i < 9; i++) {
     if (board[row][i] === k || board[i][col] === k) return false;
   }
-  for (var i = 0; i < 3; i++) {
-    for (var j = 0; j < 3; j++) {
-      if (board[boxX + i][boxY + j] === k) return false;
+  // 判断九宫格里是否有重复
+  for (let i = startX; i < startX + 3; i++) {
+    for (let j = startY; j < startY + 3; j++) {
+      if (board[i][j] === k) return false;
     }
   }
   return true;
