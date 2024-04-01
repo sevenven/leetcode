@@ -7,12 +7,12 @@
  * @param {number} n
  * @return {number}
  */
-// 标准回溯
-var climbStairs = function (n, cur = n) {
-  if (cur < 0) return 0;
-  if (cur === 0) return 1;
+// 回溯
+var climbStairs = function (n) {
+  if (n < 0) return 0;
+  if (n === 0) return 1;
   let result = 0;
-  for (let i = 1; i <= 2; i++) result += climbStairs(n, cur - i);
+  for (let step of [1, 2]) result += climbStairs(n - step);
   return result;
 };
 
@@ -20,7 +20,7 @@ var climbStairs = function (n, cur = n) {
  * @param {number} n
  * @return {number}
  */
-// 基于[推论]: 爬到第i - 1阶的方案数加上爬到第i - 2阶的方案数就等于爬到第i阶的方案数 暴力递归
+// 基于[推论]: 爬到第i阶的方案数 = 爬到第[i - 1]阶的方案数 + 爬到第[i - 2]阶的方案数 暴力递归
 // 以dp[n]为起点，递归地将一个较大问题拆解为两个较小问题的和，直至到达最小子问题 dp[1]和dp[2]时返回。其中，最小子问题的解是已知的，即dp[1] = 1、dp[2] = 2，标识爬到第1和2阶分别有1和2种方案
 var climbStairs = function (n) {
   if (n <= 2) return n;
@@ -31,7 +31,7 @@ var climbStairs = function (n) {
  * @param {number} n
  * @return {number}
  */
-// 基于[推论]: 爬到第i - 1阶的方案数加上爬到第i - 2阶的方案数就等于爬到第i阶的方案数 记忆化递归
+// 基于[推论]: 爬到第i阶的方案数 = 爬到第[i - 1]阶的方案数 + 爬到第[i - 2]阶的方案数 记忆化递归
 var climbStairs = function (n, caches = [0, 1, 2]) {
   if (caches[n]) return caches[n];
   return (caches[n] = climbStairs(n - 1, caches) + climbStairs(n - 2, caches));
@@ -80,12 +80,16 @@ var climbStairs = function (n) {
  * dp表 [ 0, 1, 2, 5, 7, 11, 14, 19, 23 ]
  */
 function minCostClimbingStairs(cost) {
-  const n = cost.length - 1;
-  if (n === 1 || n === 2) return cost[n];
-  const dp = [0, 1, 2];
-  for (let i = 3; i < cost.length; i++)
-    dp[i] = Math.min(dp[i - 1], dp[i - 2]) + cost[i];
-  return dp[n];
+  if (cost.length <= 2) return cost[cost.length - 1];
+  // const dp = [cost[0], cost[1]];
+  // for (let i = 2; i < cost.length; i++)
+  //   dp[i] = Math.min(dp[i - 1], dp[i - 2]) + cost[i];
+  // return dp[cost.length - 1];
+  let dp0 = cost[0],
+    dp1 = cost[1];
+  for (let i = 2; i < cost.length; i++)
+    [dp0, dp1] = [dp1, Math.min(dp0, dp1) + cost[i]];
+  return dp1;
 }
 
 // 变形2：带约束爬楼梯
