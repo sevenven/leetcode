@@ -104,21 +104,26 @@ function minCostClimbingStairs(cost) {
  * dp表：[[1, 0], [0, 2], [2, 1], [1, 2], [2, 3], [3, 3], [3, 5], [5, 6], [6, 8]]
  */
 function climbingStairsConstraint(n) {
-  if (n === 1 || n === 2) return 1;
-  const dp = [
-    [1, 0],
-    [0, 1],
-  ];
-  for (let i = 2; i < n; i++) {
-    dp[i] = [];
-    dp[i][0] = dp[i - 1][1];
-    dp[i][1] = dp[i - 2][0] + dp[i - 2][1];
-  }
-  return dp[n - 1][0] + dp[n - 1][1];
+  if (n <= 2) return 1;
+  let dp0 = [1, 0],
+    dp1 = [0, 1];
+  for (let i = 2; i < n; i++)
+    [dp0, dp1] = [[...dp1], [dp1[1], dp0[0] + dp0[1]]];
+  return dp1[0] + dp1[1];
+  // if (n <= 2) return 1;
+  // const dp = [
+  //   [1, 0],
+  //   [0, 1],
+  // ];
+  // for (let i = 2; i < n; i++) {
+  //   dp[i] = [];
+  //   dp[i][0] = dp[i - 1][1];
+  //   dp[i][1] = dp[i - 2][0] + dp[i - 2][1];
+  // }
+  // return dp[n - 1][0] + dp[n - 1][1];
 }
 
-// -------------------------------------------------------------------------------------------------------------------------------------
-// 变形二 步数为数组
+// 变形3:步数不一定
 /**
  * @param {number} n
  * @return {number}
@@ -136,7 +141,7 @@ var climbStairs = function (n, steps) {
 
 console.log(climbStairs(8, [1, 2, 5]));
 
-// 变形3 步数为数组且相邻步伐不能相同
+// 变形4: 步数为数组且相邻步伐不能相同
 /**
  * @param {number} n
  * @return {number}
