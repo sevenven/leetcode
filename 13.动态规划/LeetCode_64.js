@@ -27,15 +27,15 @@ var minPathSum = function (
   grid,
   i = grid.length - 1,
   j = grid[0].length - 1,
-  cache = Array.from({ length: grid.length }, () => [])
+  caches = Array.from({ length: grid.length }, () => [])
 ) {
   if (i < 0 || j < 0) return Infinity;
   if (i === 0 && j === 0) return grid[i][j];
-  if (cache[i][j]) return cache[i][j];
-  return (cache[i][j] =
+  if (caches[i][j]) return caches[i][j];
+  return (caches[i][j] =
     Math.min(
-      minPathSum(grid, i - 1, j, cache),
-      minPathSum(grid, i, j - 1, cache)
+      minPathSum(grid, i - 1, j, caches),
+      minPathSum(grid, i, j - 1, caches)
     ) + grid[i][j]);
 };
 
@@ -50,20 +50,21 @@ var minPathSum = function (
  * 状态转移方程：dp[i, j] = Math.min(dp[i - 1, j], dp[i, j - 1]) + grid[i, j]
  * dp表：[[1, 4, 5], [2, 7, 6], [6, 8, 7]]
  */
-var minPathSum = (grid, n = grid.length, m = grid[0].length) => {
+var minPathSum = (grid, m = grid.length, n = grid[0].length) => {
   // 初始化 dp 表
-  const dp = Array.from({ length: n }, () => []);
+  const dp = Array.from({ length: m }, () => []);
   dp[0][0] = grid[0][0];
-  // 状态转移：首行
-  for (let j = 1; j < m; j++) dp[0][j] = dp[0][j - 1] + grid[0][j];
   // 状态转移：首列
-  for (let i = 1; i < n; i++) dp[i][0] = dp[i - 1][0] + grid[i][0];
+  for (let i = 1; i < m; i++) dp[i][0] = dp[i - 1][0] + grid[i][0];
+  // 状态转移：首行
+  for (let j = 1; j < n; j++) dp[0][j] = dp[0][j - 1] + grid[0][j];
   // 状态转移：其余行和列
-  for (let i = 1; i < n; i++)
-    for (let j = 1; j < m; j++)
-      dp[i][j] = Math.min(dp[i][j - 1], dp[i - 1][j]) + grid[i][j];
-
-  return dp[n - 1][m - 1];
+  for (let i = 1; i < m; i++) {
+    for (let j = 1; j < n; j++) {
+      dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
+    }
+  }
+  return dp[m - 1][n - 1];
 };
 
 /**
@@ -72,18 +73,18 @@ var minPathSum = (grid, n = grid.length, m = grid[0].length) => {
  */
 // 动态规划 空间优化
 // 时间复杂度O(n*m) 空间复杂度O(m)
-var minPathSum = (grid, n = grid.length, m = grid[0].length) => {
+var minPathSum = (grid, m = grid.length, n = grid[0].length) => {
   const dp = [grid[0][0]];
-  // 状态转移：首行
-  for (let j = 1; j < m; j++) dp[j] = dp[j - 1] + grid[0][j];
+  // 状态转移 首行
+  for (let j = 1; j < n; j++) dp[j] = dp[j - 1] + grid[0][j];
   // 状态转移：其余行和列
-  for (let i = 1; i < n; i++) {
+  for (let i = 1; i < m; i++) {
     dp[0] = dp[0] + grid[i][0];
-    for (let j = 1; j < m; j++) {
-      dp[j] = Math.min(dp[j - 1], dp[j]) + grid[i][j];
+    for (let j = 1; j < n; j++) {
+      dp[j] = Math.min(dp[j], dp[j - 1]) + grid[i][j];
     }
   }
-  return dp[m - 1];
+  return dp[n - 1];
 };
 
 console.log(
