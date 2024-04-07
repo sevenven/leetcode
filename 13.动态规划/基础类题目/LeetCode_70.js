@@ -42,23 +42,19 @@ var climbStairs = function (n, caches = [0, 1, 2]) {
  * @return {number}
  */
 // 动态规划
-/*
- * 初始状态：dp[0] = 1, dp[1] = 2
- * 状态转移方程：dp[i] = dp[i - 1] + dp[i - 2]
- * dp表：[1, 2, 3, 5, 8, 13, 21, 34, 55]
- */
+/* 
+	动规五部曲
+		1.确定dp表及其下标的含义 爬到第i阶有dp[i]种方法
+		2.确定递推公式 dp[i] = dp[i - 1] + dp[i - 2]
+		3.dp表初始化 [1, 2]
+		4.确定遍历顺序 从左至右遍历
+		5.填充dp表 [1, 2, 3, 5, 8, 13, 21, 34, 55]
+*/
 var climbStairs = function (n) {
   const dp = [1, 2];
   for (let i = 2; i < n; i++) dp[i] = dp[i - 1] + dp[i - 2];
   return dp[n - 1];
-};
-
-/**
- * @param {number} n
- * @return {number}
- */
-// 动态规划 空间优化
-var climbStairs = function (n) {
+  // 状态压缩
   if (n <= 2) return n;
   let dp0 = 1,
     dp1 = 2;
