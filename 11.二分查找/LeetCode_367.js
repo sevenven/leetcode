@@ -10,11 +10,9 @@ var isPerfectSquare = function (num) {
 	var left = 0,
 		right = num;
 	while (left < right) {
-		var mid = (left + right + 1) >>> 1;
-		if (mid * mid <= num)
-			left = mid;
-		else
-			right = mid - 1;
+		var mid = (left + right + 1) >> 1;
+		if (mid * mid <= num) left = mid;
+		else right = mid - 1;
 	}
 	return left * left === num;
 };
@@ -41,8 +39,7 @@ var isPerfectSquare = function (num) {
 // 牛顿迭代法
 var isPerfectSquare = function (num) {
 	var r = num;
-	while (r * r > num)
-		r = ((r + num / r) >>> 1) | 0
+	while (r * r > num) r = ((r + num / r) >> 1) | 0;
 	return r * r === num;
 };
 

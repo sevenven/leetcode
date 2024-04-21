@@ -8,10 +8,10 @@
  * @return {TreeNode}
  */
 var sortedArrayToBST = function (nums, L = 0, R = nums.length - 1) {
-  if (L > R) return null;
-  const mid = (L + R) >>> 1,
-    root = new TreeNode(nums[mid]);
-  root.left = sortedArrayToBST(nums, L, mid - 1);
-  root.right = sortedArrayToBST(nums, mid + 1, R);
-  return root;
+	if (L > R) return null;
+	const mid = (L + R) >> 1,
+		root = new TreeNode(nums[mid]);
+	root.left = sortedArrayToBST(nums, L, mid - 1);
+	root.right = sortedArrayToBST(nums, mid + 1, R);
+	return root;
 };

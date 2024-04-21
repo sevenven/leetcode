@@ -9,10 +9,10 @@
 // 暴力法
 // 时间复杂度O(n) 空间复杂度O(1)
 var myPow = function (x, n) {
-  if (n < 0) [x, n] = [1 / x, -n];
-  let ans = 1;
-  for (let i = 0; i < n; i++) ans *= x;
-  return ans;
+	if (n < 0) [x, n] = [1 / x, -n];
+	let ans = 1;
+	for (let i = 0; i < n; i++) ans *= x;
+	return ans;
 };
 
 /**
@@ -23,12 +23,12 @@ var myPow = function (x, n) {
 // 分治法
 // 时间复杂度O(logn) 空间复杂度O(logn)
 var myPow = function (x, n, caches = []) {
-  if (n < 0) [x, n] = [1 / x, -n];
-  if (n === 0) return 1;
-  if (n === 1) return x;
-  if (caches[n]) return caches[n];
-  let half = n >>> 1;
-  return (caches[n] = myPow(x, half, caches) * myPow(x, n - half, caches));
+	if (n < 0) [x, n] = [1 / x, -n];
+	if (n === 0) return 1;
+	if (n === 1) return x;
+	if (caches[n]) return caches[n];
+	let half = n >> 1;
+	return (caches[n] = myPow(x, half, caches) * myPow(x, n - half, caches));
 };
 
 /**
@@ -39,15 +39,15 @@ var myPow = function (x, n, caches = []) {
 // 牛顿迭代法
 // 时间复杂度O(logn) 空间复杂度O(1)
 var myPow = function (x, n) {
-  if (n < 0) [x, n] = [1 / x, -n];
-  let ans = 1;
-  for (var i = n; i > 0; i = i >>> 1) {
-    if (i % 2 === 1) {
-      ans *= x;
-    }
-    x *= x;
-  }
-  return ans;
+	if (n < 0) [x, n] = [1 / x, -n];
+	let ans = 1;
+	for (var i = n; i > 0; i = i >> 1) {
+		if (i % 2 === 1) {
+			ans *= x;
+		}
+		x *= x;
+	}
+	return ans;
 };
 
 console.log(myPow(2.0, 10)); // 1024

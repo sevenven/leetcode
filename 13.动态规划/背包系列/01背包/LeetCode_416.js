@@ -17,7 +17,7 @@
 var canPartition = function (nums) {
 	const sum = nums.reduce((pre, cur) => pre + cur);
 	if (sum % 2 === 1) return false;
-	const target = sum >>> 1;
+	const target = sum >> 1;
 	const dp = Array(target + 1).fill(0);
 	for (let i = 0; i < nums.length; i++) {
 		for (let j = target; j >= nums[i]; j--) {

@@ -14,23 +14,23 @@
 // 暴力求解
 // 时间复杂度O(nlogn) 空间复杂度O(n): 暂存空间O(n)-输出空间O(n)
 var mergeKLists = function (lists) {
-  let head = (cur = new ListNode()),
-    vals = [];
-  // 时间复杂度O(n) 空间复杂度O(n)
-  for (list of lists) {
-    while (list) {
-      vals.push(list.val);
-      list = list.next;
-    }
-  }
-  // 时间复杂度O(nlogn)
-  vals.sort((a, b) => a - b);
-  // 时间复杂度O(n) 空间复杂度O(n)
-  for (val of vals) {
-    cur.next = new ListNode(val);
-    cur = cur.next;
-  }
-  return head.next;
+	let head = (cur = new ListNode()),
+		vals = [];
+	// 时间复杂度O(n) 空间复杂度O(n)
+	for (list of lists) {
+		while (list) {
+			vals.push(list.val);
+			list = list.next;
+		}
+	}
+	// 时间复杂度O(nlogn)
+	vals.sort((a, b) => a - b);
+	// 时间复杂度O(n) 空间复杂度O(n)
+	for (val of vals) {
+		cur.next = new ListNode(val);
+		cur = cur.next;
+	}
+	return head.next;
 };
 
 /**
@@ -44,25 +44,25 @@ var mergeKLists = function (lists) {
  * @return {ListNode}
  */
 var mergeKLists = function (lists) {
-  while (lists.length >= 2) {
-    const newList = mergeTwoList(lists.shift(), lists.shift());
-    lists.push(newList);
-  }
-  return lists[0] || null;
+	while (lists.length >= 2) {
+		const newList = mergeTwoList(lists.shift(), lists.shift());
+		lists.push(newList);
+	}
+	return lists[0] || null;
 };
 
 function mergeTwoList(list1, list2) {
-  let _head = (cur = new ListNode());
-  while (list1 && list2) {
-    if (list1.val <= list2.val) {
-      [cur.next, list1] = [list1, list1.next];
-    } else {
-      [cur.next, list2] = [list2, list2.next];
-    }
-    cur = cur.next;
-  }
-  cur.next = list1 || list2;
-  return _head.next;
+	let _head = (cur = new ListNode());
+	while (list1 && list2) {
+		if (list1.val <= list2.val) {
+			[cur.next, list1] = [list1, list1.next];
+		} else {
+			[cur.next, list2] = [list2, list2.next];
+		}
+		cur = cur.next;
+	}
+	cur.next = list1 || list2;
+	return _head.next;
 }
 
 /**
@@ -76,24 +76,21 @@ function mergeTwoList(list1, list2) {
  * @return {ListNode}
  */
 var mergeKLists = function (lists, L = 0, R = lists.length - 1) {
-  if (L >= R) return lists[L] || null;
-  const mid = (L + R) >>> 1;
-  return mergeTwoList(
-    mergeKLists(lists, L, mid),
-    mergeKLists(lists, mid + 1, R)
-  );
+	if (L >= R) return lists[L] || null;
+	const mid = (L + R) >> 1;
+	return mergeTwoList(mergeKLists(lists, L, mid), mergeKLists(lists, mid + 1, R));
 };
 
 function mergeTwoList(list1, list2) {
-  let _head = (cur = new ListNode());
-  while (list1 && list2) {
-    if (list1.val <= list2.val) {
-      [cur.next, list1] = [list1, list1.next];
-    } else {
-      [cur.next, list2] = [list2, list2.next];
-    }
-    cur = cur.next;
-  }
-  cur.next = list1 || list2;
-  return _head.next;
+	let _head = (cur = new ListNode());
+	while (list1 && list2) {
+		if (list1.val <= list2.val) {
+			[cur.next, list1] = [list1, list1.next];
+		} else {
+			[cur.next, list2] = [list2, list2.next];
+		}
+		cur = cur.next;
+	}
+	cur.next = list1 || list2;
+	return _head.next;
 }

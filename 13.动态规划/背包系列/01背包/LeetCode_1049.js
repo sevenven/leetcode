@@ -20,7 +20,7 @@
 */
 const lastStoneWeightII = function (stones) {
 	const sum = stones.reduce((pre, cur) => pre + cur),
-		target = sum >>> 1,
+		target = sum >> 1,
 		dp = Array(target + 1).fill(0);
 	for (let i = 0; i < stones.length; i++) {
 		for (let j = target; j >= stones[i]; j--) {

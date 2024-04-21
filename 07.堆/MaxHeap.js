@@ -1,5 +1,7 @@
+/* 大顶堆 */
 class MaxHead {
 	constructor() {
+		// 使用数组存储大顶堆
 		this.maxHeap = [];
 	}
 
@@ -37,7 +39,39 @@ class MaxHead {
 
 	/* 判断堆是否为空 */
 	isEmpty() {
-		return !this.maxHead.length;
+		return !this.maxHeap.length;
+	}
+
+	/* 从节点 i 开始，从底至顶堆化 */
+	siftUp(i) {
+		while (true) {
+			// 获取节点 i 的父节点
+			const p = MaxHead.parent(i);
+			// 当[越过根节点]或[节点无须修复]时 结束堆化
+			if (p < 0 || this.maxHeap[i] <= this.maxHeap[p]) break;
+			// 交换两节点
+			[this.maxHeap[i], this.maxHeap[p]] = [this.maxHeap[p], this.maxHeap[i]];
+			// 循环向上堆化
+			i = p;
+		}
+	}
+
+	/* 从节点 i 开始，从顶至底堆化 */
+	siftDown(i) {
+		while (true) {
+			// 判断节点 i, L, R 中值最大的节点，记为 max
+			const L = MaxHead.left(i),
+				R = MaxHead.right(i);
+			let max = i;
+			if (L < this.size() && this.maxHeap[L] > this.maxHeap[max]) max = L;
+			if (R < this.size() && this.maxHeap[R] > this.maxHeap[max]) max = R;
+			// 若节点 i 最大或索引 L, R 越界，则无须继续堆化，跳出
+			if (max === i) break;
+			// 交换两节点
+			[this.maxHeap[i], this.maxHeap[max]] = [this.maxHeap[max], this.maxHeap[i]];
+			// 循环向下堆化
+			i = max;
+		}
 	}
 
 	/* 获取左子节点的索引 */
@@ -52,39 +86,21 @@ class MaxHead {
 
 	/* 获取父节点的索引 */
 	static parent(i) {
-		return (i - 1) >>> 1;
-		// return Math.floor((i - 1) / 2); // 向下整除
-	}
-
-	/* 从节点 i 开始，从底至顶堆化 */
-	siftUp(i) {
-		while (true) {
-			// 获取节点 i 的父节点
-			const p = this.parent(i);
-			// 当“越过根节点”或“节点无须修复”时，结束堆化
-			if (p < 0 || this.maxHeap[i] <= this.maxHeap[p]) break;
-			// 交换两节点
-			[this.maxHeap[i], this.maxHeap[p]] = [this.maxHeap[p], this.maxHeap[i]];
-			// 循环向上堆化
-			i = p;
-		}
-	}
-
-	/* 从节点 i 开始，从顶至底堆化 */
-	siftDown(i) {
-		while (true) {
-			// 判断节点 i, l, r 中值最大的节点，记为 ma
-			const l = this.left(i),
-				r = this.right(i);
-			let ma = i;
-			if (l < this.size() && this.maxHead[l] > this.maxHead[ma]) ma = l;
-			if (r < this.size() && this.maxHead[r] > this.maxHead[ma]) ma = r;
-			// 若节点 i 最大或索引 l, r 越界，则无须继续堆化，跳出
-			if (ma === i) break;
-			// 交换两节点
-			[this.maxHeap[i], this.maxHeap[ma]] = [this.maxHeap[ma], this.maxHeap[i]];
-			// 循环向下堆化
-			i = ma;
-		}
+		return (i - 1) >> 1; // 向下整除
 	}
 }
+
+const maxHeap = new MaxHead();
+
+maxHeap.push(14);
+maxHeap.push(10);
+maxHeap.push(16);
+maxHeap.push(8);
+maxHeap.push(7);
+maxHeap.push(2);
+maxHeap.push(4);
+maxHeap.push(1);
+maxHeap.push(9);
+maxHeap.push(3);
+
+console.log(maxHeap.maxHeap);
