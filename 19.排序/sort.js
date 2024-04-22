@@ -109,17 +109,17 @@ selectionSort(arr);
 console.log('selectionSort--', arr);
 
 // 堆排序
-// 时间复杂度O(n^logn) 空间复杂度O(1) 原地排序 稳定排序
+// 时间复杂度O(n^logn) 空间复杂度O(1) 原地排序 不稳定排序
 function heapSort(arr) {
-	// 建堆
+	// 建堆--从最后一个没有叶子节点的节点开始向前遍历
 	for (let i = (arr.length - 2) >> 1; i >= 0; i--) heapify(arr, arr.length, i);
-	// 排序 + 维护堆
+	// 排序 + 堆化
 	for (let i = arr.length - 1; i >= 0; i--) {
 		[arr[i], arr[0]] = [arr[0], arr[i]];
 		heapify(arr, i, 0);
 	}
 }
-// 维护堆
+// 堆化
 function heapify(arr, length, i) {
 	let L = i * 2 + 1,
 		R = i * 2 + 2,
