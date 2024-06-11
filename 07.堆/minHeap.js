@@ -53,14 +53,14 @@ class MinHead {
 
 	/* 从节点 i 开始，从顶至底堆化 */
 	siftDown(i) {
-		let max = i,
+		let min = i,
 			L = MinHead.left(i),
 			R = MinHead.right(i);
-		if (L < this.size() && this.minHead[L] < this.minHead[max]) max = L;
-		if (R < this.size() && this.minHead[R] < this.minHead[max]) max = R;
-		if (max !== i) {
-			[this.minHead[i], this.minHead[max]] = [this.minHead[max], this.minHead[i]];
-			this.siftDown(max);
+		if (L < this.size() && this.minHead[L] < this.minHead[min]) min = L;
+		if (R < this.size() && this.minHead[R] < this.minHead[min]) min = R;
+		if (min !== i) {
+			[this.minHead[i], this.minHead[min]] = [this.minHead[min], this.minHead[i]];
+			this.siftDown(min);
 		}
 	}
 

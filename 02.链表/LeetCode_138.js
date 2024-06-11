@@ -7,6 +7,7 @@
 //   this.next = next || null;
 //   this.random = random || null;
 // }
+// _随机链表的复制
 
 /**
  * @param {Node} head
@@ -14,15 +15,15 @@
  */
 // 递归+哈希表
 var copyRandomList = function (head, cached = new Map()) {
-  if (!head) return null;
-  if (!cached.has(head)) {
-    cached.set(head, { val: head.val });
-    Object.assign(cached.get(head), {
-      next: copyRandomList(head.next, cached),
-      random: copyRandomList(head.random, cached),
-    });
-  }
-  return cached.get(head);
+	if (!head) return null;
+	if (!cached.has(head)) {
+		cached.set(head, { val: head.val });
+		Object.assign(cached.get(head), {
+			next: copyRandomList(head.next, cached),
+			random: copyRandomList(head.random, cached)
+		});
+	}
+	return cached.get(head);
 };
 
 /**
@@ -30,21 +31,15 @@ var copyRandomList = function (head, cached = new Map()) {
  * @return {Node}
  */
 var copyRandomList = function (head) {
-  if (!head) return null;
-  for (let cur = head; cur; cur = cur.next.next)
-    cur.next = new Node(cur.val, cur.next, null);
-  for (let cur = head; cur; cur = cur.next.next)
-    cur.next.random = cur.random?.next || null;
-  let _head = head.next,
-    cur = head,
-    _new;
-  while (cur) {
-    _new = cur.next;
-    [cur.next, cur, _new.next] = [
-      _new.next,
-      _new.next,
-      _new.next?.next || null,
-    ];
-  }
-  return _head;
+	if (!head) return null;
+	for (let cur = head; cur; cur = cur.next.next) cur.next = new Node(cur.val, cur.next, null);
+	for (let cur = head; cur; cur = cur.next.next) cur.next.random = cur.random?.next || null;
+	let _head = head.next,
+		cur = head,
+		_new;
+	while (cur) {
+		_new = cur.next;
+		[cur.next, cur, _new.next] = [_new.next, _new.next, _new.next?.next || null];
+	}
+	return _head;
 };

@@ -13,7 +13,7 @@ class MaxHead {
 		this.siftUp(this.size() - 1);
 	}
 
-	/* 元素出堆 */
+	/* 堆顶元素出堆 */
 	pop() {
 		// 判空处理
 		if (this.isEmpty()) throw new Error('堆为空');
